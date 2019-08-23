@@ -20,5 +20,9 @@ use Illuminate\Http\Request;
 
 
  Route::apiResource('products','ProductController');
+ Route::apiResource('services','ServiceController');
+ Route::apiResource('category','CategoryController');
+ Route::apiResource('commerces','CommerceController');
+ Route::apiResource('providers','ProviderController');
  Route::apiResource('users','UserController');
  Route::apiResource('rols','RolController');

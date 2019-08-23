@@ -14,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {   
-        $prod = Product::get();
-        return $prod;
+        $product = Product::get();
+        return $product;
     }
 
     /**
@@ -26,15 +26,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $prod = Product::create($request);
-/*
-        $prod->name = $request->name;
-        $prod->description = $request->description;
-        $prod->cantidad = $request->cantidad;
 
-        $prod->save();*/
+        //Obtener usuario, del usuario $user->commerce->id
 
-        return ["Status0" => "200", "Producto" => $prod];
+      /*  $request->validate([
+            'name' => 'required',
+            'description' => 'required',             
+            'stock' => 'required',
+            'price' => 'required', 
+            'id_commerce' => 'required',  
+        ]);   */    
+
+        $prod = Product::create([
+            "name" => $request->name,
+            "description" => $request->description,
+            "stock" => $request->stock,
+            "price" => $request->price,
+            "id_commerce" =>  "9999",  
+            "id_provider" => $request->id_provider,
+            "id_category" => $request->id_category
+        ]);     
+
+        return ["code" => "200", "message" =>"success", "data" => $prod];
     }
 
     /**
@@ -58,17 +71,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $producto = Product::findOrFail($request['id']);
+        //$product = Product::findOrFail($request['id']);
 
-        $producto->update([
+        $product->update([
             "name" => $request->name,
             "description" => $request->description,
-            "cantidad" => $request->cantidad,
+            "stock" => $request->stock,
+            "price" => $request->price,
+            "id_commerce" => "9999",// $user->commerce->id,  
+            "id_provider" => $request->id_provider,
+            "id_category" => $request->id_category
         ]);
         
-        $producto->save();
+        $product->save();
 
-        return ["Status" => "200", "Producto modificado" => $producto];
+        return ["Status" => "200", "message" => "Actualizado", "data" => $product];
     }
 
     /**
@@ -80,6 +97,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return ["Status" => "200"];
+        return ["code" => "200", "meesage" => "Eliminado"];
     }
 }

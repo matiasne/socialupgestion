@@ -50,7 +50,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {      
-        return ["Status"=>"200", "token"=> $user->remember_token];
+
+        return ["code"=>"200", "message"=>"succes", "data"=> $user];
     }
 
     /**
