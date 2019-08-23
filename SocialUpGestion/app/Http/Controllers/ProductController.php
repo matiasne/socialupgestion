@@ -26,13 +26,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $prod = new Product;
-
+        $prod = Product::create($request);
+/*
         $prod->name = $request->name;
         $prod->description = $request->description;
         $prod->cantidad = $request->cantidad;
 
-        $prod->save();
+        $prod->save();*/
 
         return ["Status0" => "200", "Producto" => $prod];
     }
@@ -58,13 +58,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->cantidad = $request->cantidad;
+        $producto = Product::findOrFail($request['id']);
 
-        $product->save();
+        $producto->update([
+            "name" => $request->name,
+            "description" => $request->description,
+            "cantidad" => $request->cantidad,
+        ]);
+        
+        $producto->save();
 
-        return ["Status" => "200", "Producto modificado" => $product];
+        return ["Status" => "200", "Producto modificado" => $producto];
     }
 
     /**
