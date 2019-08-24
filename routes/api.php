@@ -18,11 +18,24 @@ use Illuminate\Http\Request;
 });
  */
 
-
+ Route::apiResource('rols','RolController');
+ Route::apiResource('users','UserController');
+ 
+ Route::apiResource('commerces','CommerceController');
+ Route::apiResource('category','CategoryController');
  Route::apiResource('products','ProductController');
  Route::apiResource('services','ServiceController');
- Route::apiResource('category','CategoryController');
- Route::apiResource('commerces','CommerceController');
  Route::apiResource('providers','ProviderController');
- Route::apiResource('users','UserController');
- Route::apiResource('rols','RolController');
+
+ Route::resource('users.commerces', 'CommerceController');
+
+ Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+  
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::get('user', 'AuthController@user');
+    });
+});
+
