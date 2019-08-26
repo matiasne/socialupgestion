@@ -18,4 +18,10 @@ class Category extends Model
         return $this->belongsTo('App\Commerce', 'id_commerce');
         
     }
+
+
+     public function Nicolas(Type $var = null)
+    {
+        # code...
+    }
 }
