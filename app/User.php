@@ -2,12 +2,14 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'rol_id','name', 'email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -27,13 +29,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
-    public function roles(){
-        return $this->belongsTo('App\Rol');
-    }
-
-    public function commerces()
-    {
-        return $this->belongsToMany('App\Commerce');
-    }
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

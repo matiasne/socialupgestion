@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commerce;
-use Illuminate\Http\Request;
+use App\Http\Requests\CommerceStoreRequest;
 
 class CommerceController extends Controller
 {
@@ -35,14 +35,19 @@ class CommerceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommerceStoreRequest $request)
     {
         //Obtener usuario logueado
         //
+
+        $data = $request;
+
+     
+
         $commerce = Commerce::create([
-            "name" => $request->name,
-            "address" => $request->address,
-            "phone_numebr" => $request->phone_numebr,
+            "name" => $data->name,
+            "address" => $data->address,
+            "phone_number" => $data->phone_number,
            
         ]);     
 

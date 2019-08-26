@@ -13,16 +13,31 @@ use Illuminate\Http\Request;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
+
+
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
- */
 
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+  
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::get('user', 'AuthController@user');
+    });
+});
 
- Route::apiResource('products','ProductController');
- Route::apiResource('services','ServiceController');
- Route::apiResource('category','CategoryController');
- Route::apiResource('commerces','CommerceController');
- Route::apiResource('providers','ProviderController');
- Route::apiResource('users','UserController');
- Route::apiResource('rols','RolController');
+Route::group(['middleware' => 'auth:api'], function() {
+        
+    Route::apiResource('products','ProductController');    
+    Route::apiResource('services','ServiceController');
+    Route::apiResource('category','CategoryController');
+    Route::apiResource('commerces','CommerceController');
+    Route::apiResource('providers','ProviderController');
+    Route::apiResource('users','UserController');
+    Route::apiResource('rols','RolController');
+
+});
