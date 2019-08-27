@@ -14,9 +14,11 @@ class CommerceController extends Controller
      */
     public function index()
     {
-        //
+        
         $commerce = Commerce::get();
         return $commerce;
+
+        /*return Commerce::find("1")->employes()->get();*/
     }
 
     /**
@@ -40,14 +42,14 @@ class CommerceController extends Controller
         //Obtener usuario logueado
         //
 
-        $data = $request->validate();
+        $data = $request->validated();
 
      
 
         $commerce = Commerce::create([
-            "name" => $data->name,
-            "address" => $data->address,
-            "phone_number" => $data->phone_number,
+            "name" => $request->name,
+            "address" => $request->address,
+            "phone_number" => $request->phone_number,
            
         ]);     
 

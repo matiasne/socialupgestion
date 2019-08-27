@@ -8,9 +8,14 @@ class Employe extends Model
 {
 
 
-protected $fillable = [
-    'name', 
-    'surname', 
-    'position'
-];
+    protected $fillable = [
+        'name',
+        'commerce_id',
+        'surname', 
+        'position'
+    ];
+
+    public function commerce(){
+        return $this->belongsTo("App\Commerce");
+    }
 }

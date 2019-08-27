@@ -23,5 +23,8 @@ class Commerce extends Model
         return $this->belongsToMany('App\User');
     }
 
+    public function employes(){
+        return $this->hasMany("App\Employe");
+    }
     
 }

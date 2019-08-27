@@ -15,6 +15,8 @@ class CreateEmployesTable extends Migration
     {
         Schema::create('employes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('commerce_id');
+            $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->string('name');
             $table->string('surname');
             $table->string('position');

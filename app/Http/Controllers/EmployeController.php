@@ -27,11 +27,16 @@ class EmployeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(EmployeUpdateRequest $request)
-    {
+    {   
+
+
         $data = $request->validated();
         
+    
+
         $emp = Employe::create([
             "name" => $request->name,
+            "commerce_id" => $request->commerce_id,
             "surname" => $request->surname,
             "position" => $request->position
         ]);
@@ -64,8 +69,10 @@ class EmployeController extends Controller
 
         $data = $request->validated();
 
+
         $employe->update([
             "name" => $request->name,
+            "commerce_id" => $request->commerce_id,
             "surname" => $request->surname,
             "position" => $request->position
         ]);
@@ -73,6 +80,7 @@ class EmployeController extends Controller
         $employe->save();
 
         return ["Status" => "200", "message" => "Actualizado", "data" => $employe];
+
         
     }
 
