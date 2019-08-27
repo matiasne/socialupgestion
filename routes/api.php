@@ -40,4 +40,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('users','UserController');
     Route::apiResource('rols','RolController');
     Route::apiResource('employes','EmployeController');
+
+
+    Route::apiResource('commerces.employes','EmployeController'); 
 });
