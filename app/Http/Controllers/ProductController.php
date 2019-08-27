@@ -46,7 +46,7 @@ class ProductController extends Controller
             "id_provider" => $request->id_provider,
             "id_category" => $request->id_category
         ]);     
-
+            
         return ["code" => "200", "message" =>"success", "data" => $prod];
     }
 

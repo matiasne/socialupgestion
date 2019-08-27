@@ -40,7 +40,7 @@ class CommerceController extends Controller
         //Obtener usuario logueado
         //
 
-        $data = $request;
+        $data = $request->validate();
 
      
 
