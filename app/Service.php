@@ -11,19 +11,19 @@ class Service extends Model
         'name', 
         'description', 
         'price',
-        'id_commerce',
-        'id_category'
+        'commerce_id',
+        'category_id'
     ];
 
     public function commerce(){
 
-        return $this->belongsTo('App\Commerce', 'id_commerce');
+        return $this->belongsTo('App\Commerce');
 
     }
 
     public function categories(){
 
-        return $this->belongsTo('App\Category', 'id_category');
+        return $this->belongsTo('App\Category');
         
     }
 

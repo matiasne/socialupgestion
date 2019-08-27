@@ -8,13 +8,13 @@ class Provider extends Model
 {
     //
     protected $fillable = [
-        'id_commerce',
+        'commerce_id',
         'name',         
     ];
 
     public function commerce(){
 
-        return $this->belongsTo('App\Commerce', 'id_commerce');
+        return $this->belongsTo('App\Commerce');
         
     }
 }

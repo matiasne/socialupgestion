@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Commerce;
+use App\Http\Controllers\Controller;
 
 use App\Product;
+use App\Commerce;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
 
@@ -14,10 +16,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Commerce $commerce)
     {   
-        $product = Product::get();
-        return $product;
+        $products = $commerce->products()->get();
+        return $products;
     }
 
     /**
@@ -26,20 +28,17 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductStoreRequest $request)
-    {
-
-        //Obtener usuario, del usuario $user->commerce->id
-
+    public function store(ProductStoreRequest $request, Commerce $commerce)
+    {       
 
         $prod = Product::create([
             "name" => $request->name,
             "description" => $request->description,
             "stock" => $request->stock,
             "price" => $request->price,
-            "id_commerce" =>  "9999",  
-            "id_provider" => $request->id_provider,
-            "id_category" => $request->id_category
+            "commerce_id" =>  $commerce->id,  
+            "provider_id" => $request->provider_id,
+            "category_id" => $request->category_id
         ]);     
 
         return ["code" => "200", "message" =>"success", "data" => $prod];
@@ -51,7 +50,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Commerce $commerce, Product $product)
     {
         return $product;
     }
@@ -64,18 +63,20 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $commerce_id, $product_id)
     {
-        //$product = Product::findOrFail($request['id']);
 
+        $product = Product::findOrFail($product_id);
+       
+        
         $product->update([
             "name" => $request->name,
             "description" => $request->description,
             "stock" => $request->stock,
             "price" => $request->price,
-            "id_commerce" => "9999",// $user->commerce->id,  
-            "id_provider" => $request->id_provider,
-            "id_category" => $request->id_category
+            "commerce_id" => $commerce_id,// $user->commerce->id,  
+            "provider_id" => $request->provider_id,
+            "category_id" => $request->category_id
         ]);
         
         $product->save();
@@ -83,15 +84,12 @@ class ProductController extends Controller
         return ["code" => "200", "message" => "Actualizado", "data" => $product];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
+    public function destroy($commerce_id,$product_id)
     {
+        $product = Product::findOrFail($product_id);
         $product->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }
+
+   
 }

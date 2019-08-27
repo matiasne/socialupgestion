@@ -32,8 +32,8 @@ class ServiceStoreRequest extends FormRequest
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:500',
             'price' => 'required|integer',
-            'id_commerce' => 'required|integer',
-            'id_category' => 'required|integer'
+            'commerce_id' => 'required|integer',
+            'category_id' => 'required|integer'
         ];
     }
 
@@ -43,8 +43,8 @@ class ServiceStoreRequest extends FormRequest
             'name.required' => 'name is required!',
             'description.required' => 'description is required!',
             'price.required' => 'price is required!',
-            'id_commerce.required' => 'id_commerce is required!',
-            'id_category.required' => 'id_category is required!'
+            'commerce_id.required' => 'commerce_id is required!',
+            'category_id.required' => 'category_id is required!'
         ];
     }
 }

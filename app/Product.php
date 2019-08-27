@@ -11,27 +11,27 @@ class Product extends Model
         'description', 
         'stock',
         'price',
-        'id_commerce',
-        'id_provider',
-        'id_category'
+        'commerce_id',
+        'provider_id',
+        'category_id'
 
     ];
 
     public function commerce(){
 
-        return $this->belongsTo('App\Commerce', 'id_commerce');
+        return $this->belongsTo('App\Commerce');
 
     }
 
     public function categories(){
 
-        return $this->belongsTo('App\Category', 'id_category');
+        return $this->belongsTo('App\Category');
         
     }
 
     public function providers(){
 
-        return $this->belongsTo('App\Provider', 'id_provider');
+        return $this->belongsTo('App\Provider',);
         
     }
 }

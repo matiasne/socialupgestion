@@ -1,6 +1,6 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Commerce;
+use App\Http\Controllers\Controller;
 
 use App\Category;
 use Illuminate\Http\Request;
@@ -17,8 +17,8 @@ class CategoryController extends Controller
     {
         //
          //
-         $category = Category::get();
-         return $category;
+        $categories = $commerce->categories()->get();
+        return $categories;
     }
 
     /**
@@ -37,12 +37,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryStoreRequest $request)
+    public function store(CategoryStoreRequest $request, Commerce $commerce)
     {
-        //
         $category = Category::create([
             "name" => $request->name,
-            "id_commerce" =>  "9999",  
+            "commerce_id" =>  $commerce_id->id,  
         ]);     
 
         return ["code" => "200", "message" =>"success", "data" => $category];
@@ -54,21 +53,13 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Commerce $commerce,Category $category)
     {
         //
+        return $category;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
@@ -77,12 +68,14 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,  $commerce_id, $category_id)
     {
         //
+        $category = Category::findOrFail($category_id);
+
         $category->update([
             "name" => $request->name,
-            "id_commerce" =>  "9999",  
+            "commerce_id" =>  $request->commerce_id,  
         ]);
         
         $category->save();
@@ -96,9 +89,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($commerce_id,$category_id)
     {
         //
+        $category = Category::findOrFail($category_id);
         $category->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

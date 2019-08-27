@@ -14,7 +14,7 @@ class Commerce extends Model
         'phone_number',
     ];
 
-    public function productos(){
+    public function products(){
 
         return $this->hasMany('App\Product');
     }

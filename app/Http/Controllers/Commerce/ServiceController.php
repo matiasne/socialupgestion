@@ -1,6 +1,6 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Commerce;
+use App\Http\Controllers\Controller;
 
 use App\Service;
 use Illuminate\Http\Request;
@@ -16,8 +16,8 @@ class ServiceController extends Controller
     public function index()
     {
         //
-        $service = Service::get();
-        return $service;
+        $services = $commerce->services()->get();
+        return $services;
     }
 
     /**
@@ -36,15 +36,15 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ServiceStoreRequest $request)
+    public function store(ServiceStoreRequest $request, Commerce $commerce)
     {
         //
         $serv = Service::create([
             "name" => $request->name,
             "description" => $request->description,
             "price" => $request->price,
-            "id_commerce" =>  "9999",  
-            "id_category" => $request->id_category
+            "commerce_id" =>  $commerce->id,  
+            "category_id" => $request->category_id
         ]);     
 
         return ["code" => "200", "message" =>"success", "data" => $serv];
@@ -56,22 +56,13 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show(Commerce $commerce, Service $service)
     {
         //
+        return $service;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Service $service)
-    {
-        //
-    }
-
+   
     /**
      * Update the specified resource in storage.
      *
@@ -79,15 +70,16 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, $commerce_id, $service_id)
     {
+        $service = Service::findOrFail($service_id);
         //
         $service->update([
             "name" => $request->name,
             "description" => $request->description,
             "price" => $request->price,
-            "id_commerce" => "9999",// $user->commerce->id,  
-            "id_category" => $request->id_category
+            "commerce_id" => $request->commerce_id,// $user->commerce->id,  
+            "category_id" => $request->category_id
         ]);
         
         $service->save();
@@ -101,9 +93,10 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy($commerce_id,$product_id)
     {
         //
+        $service = Service::findOrFail($service_id);
         $service->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

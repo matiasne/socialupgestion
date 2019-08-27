@@ -20,7 +20,7 @@ class CategoryStoreRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * 'id_commerce',
+     * 'commerce_id',
         'name',        
      */
 
@@ -29,7 +29,7 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             //
-            'id_commerce' => 'required|integer',
+            'commerce_id' => 'required|integer',
             'name' => 'required|string|max:200',
         ];
     }
@@ -37,7 +37,7 @@ class CategoryStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_commerce.required' => 'id_commerce is required!',
+            'commerce_id.required' => 'commerce_id is required!',
             'name.required' => 'name is required!',
         ];
     }

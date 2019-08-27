@@ -16,10 +16,10 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('id_commerce')->unsigned();
-            $table->foreign('id_commerce')->references('id')->on('commerces');
-            $table->integer('id_category')->unsigned();
-            $table->foreign('id_category')->references('id')->on('categories')->nullable();
+            $table->integer('commerce_id')->unsigned();
+            $table->foreign('commerce_id')->references('id')->on('commerces');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories')->nullable();
             $table->string('description');
             $table->string('price');
             $table->timestamps();

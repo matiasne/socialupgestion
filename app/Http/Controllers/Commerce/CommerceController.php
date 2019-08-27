@@ -1,12 +1,12 @@
 <?php
+namespace App\Http\Controllers\Commerce;
+use App\Http\Controllers\Controller;
 
-namespace App\Http\Controllers;
-
-use App\Provider;
+use App\Commerce;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProviderStoreRequest;
+use App\Http\Requests\CommerceStoreRequest;
 
-class ProviderController extends Controller
+class CommerceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,9 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
-        $provider = Provider::get();
-        return $provider;
         
+        $commerces = $request->user('api')->commerces();
+        return $commerces;
     }
 
     /**
@@ -37,35 +36,37 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProviderStoreRequest $request)
+    public function store(CommerceStoreRequest $request)
     {
-        //
-        $provider = Provider::create([
+        
+        $commerce = $request->user('api')->commerces()->create([
             "name" => $request->name,
-            "id_commerce" =>  "9999",  
-        ]);     
+            "address" => $request->address,
+            "phone_number" => $request->phone_number,    
+        ]);          
 
-        return ["code" => "200", "message" =>"success", "data" => $provider];
+        return ["code" => "200", "message" =>"success", "data" => $commerce];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Provider  $provider
+     * @param  \App\Commerce  $commerce
      * @return \Illuminate\Http\Response
      */
-    public function show(Provider $provider)
+    public function show(Commerce $commerce)
     {
         //
+        return $commerce;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Provider  $provider
+     * @param  \App\Commerce  $commerce
      * @return \Illuminate\Http\Response
      */
-    public function edit(Provider $provider)
+    public function edit(Commerce $commerce)
     {
         //
     }
@@ -74,33 +75,34 @@ class ProviderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Provider  $provider
+     * @param  \App\Commerce  $commerce
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Provider $provider)
+    public function update(Request $request, Commerce $commerce)
     {
         //
-        $provider->update([
+        $commerce->update([
             "name" => $request->name,
-            "id_commerce" =>  "9999",  
+            "address" => $request->address,
+            "phone_number" => $request->phone_number,
         ]);
         
-        $provider->save();
+        $commerce->save();
 
-        return ["code" => "200", "message" => "Actualizado", "data" => $provider];
-    
+        
+        return ["code" => "200", "message" => "Actualizado", "data" => $commerce];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Provider  $provider
+     * @param  \App\Commerce  $commerce
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Provider $provider)
+    public function destroy(Commerce $commerce)
     {
         //
-        $provider->delete();
+        $commerce->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }
 }

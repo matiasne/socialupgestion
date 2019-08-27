@@ -28,7 +28,7 @@ class ProviderStoreRequest extends FormRequest
     {
         return [
             //
-            'id_commerce' => 'required|integer',
+            'commerce_id' => 'required|integer',
             'name' => 'required|string|max:200',
         ];
     }
@@ -36,7 +36,7 @@ class ProviderStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_commerce.required' => 'id_commerce is required!',
+            'commerce_id.required' => 'commerce_id is required!',
             'name.required' => 'name is required!',
         ];
     }

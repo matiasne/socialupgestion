@@ -32,12 +32,14 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth:api'], function() {
         
-    Route::apiResource('products','ProductController');    
-    Route::apiResource('services','ServiceController');
-    Route::apiResource('category','CategoryController');
-    Route::apiResource('commerces','CommerceController');
-    Route::apiResource('providers','ProviderController');
     Route::apiResource('users','UserController');
     Route::apiResource('rols','RolController');
+
+    Route::apiResource('commerces','Commerce\CommerceController');
+    Route::apiResource('commerces.products','Commerce\ProductController'); 
+    Route::apiResource('commerces.services','Commerce\ServiceController');
+    Route::apiResource('commerces.categories','Commerce\CategoryController');    
+    Route::apiResource('commerces.providers','Commerce\ProviderController');
+    
 
 });
