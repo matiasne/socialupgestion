@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryStoreRequest;
 
 class CategoryController extends Controller
 {
@@ -36,7 +37,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         //
         $category = Category::create([
@@ -86,7 +87,7 @@ class CategoryController extends Controller
         
         $category->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $category];
+        return ["code" => "200", "message" => "Actualizado", "data" => $category];
     }
 
     /**

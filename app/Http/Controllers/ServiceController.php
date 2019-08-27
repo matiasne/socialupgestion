@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use App\Http\Requests\ServiceStoreRequest;
 
 class ServiceController extends Controller
 {
@@ -35,7 +36,7 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServiceStoreRequest $request)
     {
         //
         $serv = Service::create([
@@ -91,7 +92,7 @@ class ServiceController extends Controller
         
         $service->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $service];
+        return ["code" => "200", "message" => "Actualizado", "data" => $service];
     }
 
     /**

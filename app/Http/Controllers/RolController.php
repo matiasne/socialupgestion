@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Rol;
 use Illuminate\Http\Request;
+use App\Http\Requests\RolStoreRequest;
 
 class RolController extends Controller
 {
@@ -33,7 +34,7 @@ class RolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RolStoreRequest $request)
     {
         //
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductStoreRequest;
+
 
 class ProductController extends Controller
 {
@@ -24,18 +26,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
 
         //Obtener usuario, del usuario $user->commerce->id
 
-      /*  $request->validate([
-            'name' => 'required',
-            'description' => 'required',             
-            'stock' => 'required',
-            'price' => 'required', 
-            'id_commerce' => 'required',  
-        ]);   */    
 
         $prod = Product::create([
             "name" => $request->name,
@@ -85,7 +80,7 @@ class ProductController extends Controller
         
         $product->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $product];
+        return ["code" => "200", "message" => "Actualizado", "data" => $product];
     }
 
     /**

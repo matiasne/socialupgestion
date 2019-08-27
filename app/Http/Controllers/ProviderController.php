@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Provider;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProviderStoreRequest;
 
 class ProviderController extends Controller
 {
@@ -36,7 +37,7 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProviderStoreRequest $request)
     {
         //
         $provider = Provider::create([
@@ -86,7 +87,7 @@ class ProviderController extends Controller
         
         $provider->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $provider];
+        return ["code" => "200", "message" => "Actualizado", "data" => $provider];
     
     }
 

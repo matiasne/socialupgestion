@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commerce;
+use Illuminate\Http\Request;
 use App\Http\Requests\CommerceStoreRequest;
 
 class CommerceController extends Controller
@@ -37,19 +38,12 @@ class CommerceController extends Controller
      */
     public function store(CommerceStoreRequest $request)
     {
-        //Obtener usuario logueado
-        //
-
-        $data = $request;
-
-     
-
-        $commerce = Commerce::create([
-            "name" => $data->name,
-            "address" => $data->address,
-            "phone_number" => $data->phone_number,
-           
-        ]);     
+        
+        $commerce = $request->user('api')->commerces()->create([
+            "name" => $request->name,
+            "address" => $request->address,
+            "phone_number" => $request->phone_number,    
+        ]);          
 
         return ["code" => "200", "message" =>"success", "data" => $commerce];
     }
@@ -90,12 +84,13 @@ class CommerceController extends Controller
         $commerce->update([
             "name" => $request->name,
             "address" => $request->address,
-            "phone_number" => $request->phone_numebr,
+            "phone_number" => $request->phone_number,
         ]);
         
         $commerce->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $commerce];
+        
+        return ["code" => "200", "message" => "Actualizado", "data" => $commerce];
     }
 
     /**
