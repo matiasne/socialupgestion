@@ -17,9 +17,7 @@ class SubscriptionController extends Controller
     {
         $subs = $commerce->subscription()->get();
         return $subs;
-    }
-
-    
+    }    
 
     /**
      * Store a newly created resource in storage.
@@ -29,8 +27,7 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request, Commerce $commerce)
     {
-        $subs = Subscription::create([
-            
+        $subs = Subscription::create([            
             "commerce_id" =>  $commerce->id,  
             "client_id" => $request->client_id,
             "employe_id" => $request->employe_id,
@@ -108,7 +105,7 @@ class SubscriptionController extends Controller
             $ids[] = $service->id;
         }
         $subs->services()->detach($ids);
-        
+
         $subs->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }
