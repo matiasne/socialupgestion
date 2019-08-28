@@ -27,5 +27,17 @@ class Commerce extends Model
     public function employes(){
         return $this->hasMany("App\Employe");
     }
+
+    public function clients(){
+        return $this->hasMany("App\Client");        
+    }
+
+    public function categories(){
+        return $this->hasMany("App\Category");
+    }
+
+    public function providers(){
+        return $this->hasMany("App\Provider");
+    }
     
 }

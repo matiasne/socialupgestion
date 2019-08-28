@@ -18,7 +18,7 @@ class EmployeController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        /*return Employe::get();*/
+       
 
         $emp = $commerce->employes()->get();
         return $emp;

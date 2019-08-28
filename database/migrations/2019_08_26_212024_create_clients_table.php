@@ -11,6 +11,8 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('commerce_id');
+            $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->string('name');
             $table->string('address');
             $table->string('phone_nunmber');
