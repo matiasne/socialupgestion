@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 
+use App\Commerce;
 use App\Client;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,8 @@ class ClientController extends Controller
 {
    
     public function index(Commerce $commerce)
-    {
-       
-
+    {     
+        
         $client = $commerce->clients()->get();
         return $client;
     }
