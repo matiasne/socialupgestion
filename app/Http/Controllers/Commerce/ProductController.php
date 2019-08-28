@@ -40,7 +40,7 @@ class ProductController extends Controller
             "provider_id" => $request->provider_id,
             "category_id" => $request->category_id
         ]);     
-
+            
         return ["code" => "200", "message" =>"success", "data" => $prod];
     }
 
