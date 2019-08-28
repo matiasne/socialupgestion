@@ -39,5 +39,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('providers','ProviderController');
     Route::apiResource('users','UserController');
     Route::apiResource('rols','RolController');
+    Route::apiResource('clients','ClientController');
 
 });
