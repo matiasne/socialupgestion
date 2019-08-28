@@ -15,7 +15,7 @@ class ServiceController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        //
+        
         $services = $commerce->services()->get();
         return $services;
     }

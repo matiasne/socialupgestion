@@ -12,12 +12,9 @@ class ClientController extends Controller
    
     public function index(Commerce $commerce)
     {     
-        
         $client = $commerce->clients()->get();
         return $client;
-    }
-
-  
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -59,7 +56,7 @@ class ClientController extends Controller
     public function update(Request $request,  $commerce_id, $client_id)
     {
 
-        $client = Cient::findOrFail($client_id);
+        $client = Client::findOrFail($client_id);
 
         $client->update([
             "name" => $request->name,

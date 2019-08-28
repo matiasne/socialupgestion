@@ -27,4 +27,10 @@ class Service extends Model
         
     }
 
+    public function subscriptions(){
+        
+        return $this->belongsToMany('App\Subscription');
+        
+    }
+
 }
