@@ -31,7 +31,7 @@ class Product extends Model
 
     public function providers(){
 
-        return $this->belongsTo('App\Provider',);
+        return $this->belongsTo('App\Provider');
         
     }
 }
