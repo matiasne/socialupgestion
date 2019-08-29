@@ -11,7 +11,7 @@ class Subscription extends Model
             'commerce_id', 
             'client_id',
             'employe_id',
-            'creation_date',
+            'start_date',
             'period',
             'enum_start_payment',
             'total_cost'
