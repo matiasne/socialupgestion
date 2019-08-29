@@ -33,7 +33,6 @@ class ProductStoreRequest extends FormRequest
             'description' => 'required|string|max:500',
             'stock' => 'required|integer',
             'price' => 'required|integer',
-            'commerce_id' => 'required|integer',
             'provider_id' => 'required|integer',
             'category_id' => 'required|integer'
         ];

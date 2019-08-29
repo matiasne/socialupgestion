@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 
+use App\Commerce;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryStoreRequest;
@@ -41,7 +42,7 @@ class CategoryController extends Controller
     {
         $category = Category::create([
             "name" => $request->name,
-            "commerce_id" =>  $commerce_id->id,  
+            "commerce_id" =>  $commerce->id,  
         ]);     
 
         return ["code" => "200", "message" =>"success", "data" => $category];

@@ -32,7 +32,6 @@ class ServiceStoreRequest extends FormRequest
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:500',
             'price' => 'required|integer',
-            'commerce_id' => 'required|integer',
             'category_id' => 'required|integer'
         ];
     }

@@ -13,10 +13,10 @@ class CommerceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
-        $commerces = $request->user('api')->commerces();
+        $commerces = $request->user('api')->commerces()->get();
         return $commerces;
     }
 

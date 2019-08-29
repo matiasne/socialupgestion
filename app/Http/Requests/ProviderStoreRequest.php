@@ -28,7 +28,6 @@ class ProviderStoreRequest extends FormRequest
     {
         return [
             //
-            'commerce_id' => 'required|integer',
             'name' => 'required|string|max:200',
         ];
     }
