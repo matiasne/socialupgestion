@@ -43,5 +43,9 @@ class Commerce extends Model
     public function subscription(){
         return $this->hasMany("App\Subscription");
     }
+
+    public function services(){
+        return $this->hasMany("App\Service");
+    }
     
 }

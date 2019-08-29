@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 
+use App\Commerce;
 use App\Provider;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProviderStoreRequest;
@@ -17,7 +18,7 @@ class ProviderController extends Controller
     {
         //
          //
-        $providers = $commerce->categories()->get();
+        $providers = $commerce->providers()->get();
         return $providers;
     }
 
@@ -37,11 +38,11 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProvidersStoreRequest $request, Commerce $commerce)
+    public function store(ProviderStoreRequest $request, Commerce $commerce)
     {
         $provider = Provider::create([
             "name" => $request->name,
-            "commerce_id" =>  $commerce_id->id,  
+            "commerce_id" =>  $commerce->id,  
         ]);     
 
         return ["code" => "200", "message" =>"success", "data" => $provider];
@@ -75,7 +76,7 @@ class ProviderController extends Controller
 
         $provider->update([
             "name" => $request->name,
-            "commerce_id" =>  $request->commerce_id,  
+            "commerce_id" =>  $commerce_id,  
         ]);
         
         $provider->save();
