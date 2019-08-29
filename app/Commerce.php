@@ -40,6 +40,10 @@ class Commerce extends Model
         return $this->hasMany("App\Provider");
     }
 
+    public function sales(){
+        return $this->hasMany("App\Sale");
+    }
+
     public function subscription(){
         return $this->hasMany("App\Subscription");
     }

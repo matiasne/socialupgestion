@@ -32,6 +32,9 @@ class Product extends Model
     public function providers(){
 
         return $this->belongsTo('App\Provider');
-        
+    }
+
+    public function sales(){
+        return $this->belongsToMany('App\Sale');
     }
 }
