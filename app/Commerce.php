@@ -52,4 +52,7 @@ class Commerce extends Model
         return $this->hasMany("App\Service");
     }
     
+    public function services(){
+        return $this->hasMany("App\Service");
+    }
 }

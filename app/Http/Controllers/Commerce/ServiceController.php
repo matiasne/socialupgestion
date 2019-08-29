@@ -4,8 +4,11 @@ use App\Http\Controllers\Controller;
 
 use App\Commerce;
 use App\Service;
+use App\Commerce;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\ServiceStoreRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 
 class ServiceController extends Controller
 {
@@ -31,7 +34,9 @@ class ServiceController extends Controller
      */
     public function store(ServiceStoreRequest $request, Commerce $commerce)
     {
-        //
+        
+        $data = $request->validated();
+
         $serv = Service::create([
             "name" => $request->name,
             "description" => $request->description,
@@ -63,15 +68,17 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $commerce_id, $service_id)
+    public function update(ServiceUpdateRequest $request, Commerce $commerce, Service $service)
     {
-        $service = Service::findOrFail($service_id);
+        //$service = Service::findOrFail($service_id);
+
+        $data = $request->validated();
         //
         $service->update([
             "name" => $request->name,
             "description" => $request->description,
             "price" => $request->price,
-            "commerce_id" => $request->commerce_id,// $user->commerce->id,  
+            "commerce_id" => $commerce->id,// $user->commerce->id,  
             "category_id" => $request->category_id
         ]);
         
@@ -86,11 +93,10 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy($commerce_id,$product_id)
+    public function destroy(Commerce $commerce ,Service $service)
     {
-        //
-        $service = Service::findOrFail($service_id);
         $service->delete();
+
         return ["code" => "200", "meesage" => "Eliminado"];
     }
 }

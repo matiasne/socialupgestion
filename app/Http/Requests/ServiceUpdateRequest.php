@@ -4,13 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServiceStoreRequest extends FormRequest
+class ServiceUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
-    
      */
     public function authorize()
     {
@@ -21,14 +20,10 @@ class ServiceStoreRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * 
      */
-
-
     public function rules()
     {
         return [
-            //
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:500',
             'price' => 'required|integer',
@@ -39,10 +34,10 @@ class ServiceStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'name is required!',
-            'description.required' => 'description is required!',
-            'price.required' => 'price is required!',
-            'category_id.required' => 'category_id is required!'
+            'name.required' => 'name is required for update!',
+            'description.required' => 'description is required for update!',
+            'price.required' => 'price is required for update!',
+            'category_id.required' => 'category_id is required for update!'
         ];
     }
 }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 
 use App\Subscription;
+use App\Commerce;
 use Illuminate\Http\Request;
+use App\Http\Requests\SubscriptionStoreRequest;
+use App\Http\Requests\SubscriptionUpdateRequest;
 
 class SubscriptionController extends Controller
 {
@@ -25,9 +28,12 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Commerce $commerce)
-    {
-        $subs = Subscription::create([            
+    public function store(SubscriptionStoreRequest $request, Commerce $commerce)
+    {   
+        $data = $request->validated();
+
+        $subs = Subscription::create([
+            
             "commerce_id" =>  $commerce->id,  
             "client_id" => $request->client_id,
             "employe_id" => $request->employe_id,
@@ -36,10 +42,13 @@ class SubscriptionController extends Controller
             "total_cost" => $request->total_cost,
             "period" => $request->period,
             "start_date" => $request->start_date
-        ]);  
+
+        ]); 
         
-        foreach ($request['services_ids'] as $service_id)
+        foreach ($request['services_ids'] as $service_id){
             $subs->services()->attach($service_id);
+        }
+            
 
         return ["code" => "200", "message" =>"success", "data" => $subs];
     }
@@ -63,11 +72,11 @@ class SubscriptionController extends Controller
      * @param  \App\Subscription  $subscription
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $commerce_id, $subscription_id)
+    public function update(SubscriptionUpdateRequest $request, Commerce $commerce, Subscription $subscription)
     {
-        $subs = Subscription::findOrFail($subscription_id);
-        //
-        $subs->update([
+       /* $subs = Subscription::findOrFail($subscription_id);*/
+        
+        $subscription->update([
             "commerce_id" =>  $commerce->id,  
             "client_id" => $request->client_id,
             "employe_id" => $request->employe_id,
@@ -78,17 +87,15 @@ class SubscriptionController extends Controller
             "start_date" => $request->start_date
         ]);
 
-        foreach($subs->services() as $service){
-            $ids[] = $service->id;
-        }
-        $subs->services()->detach($ids);
+        $subscription->services()->detach();
 
         foreach ($request['services_ids'] as $service_id)
-            $subs->services()->attach($service_id);
+            $subscription->services()->attach($service_id);
 
-        $subs->save();
+        $subscription->save();
 
-        return ["code" => "200", "message" => "Actualizado", "data" => $subs];
+        return ["code" => "200", "message" => "Actualizado", "data" => $subscription];
+
     }
 
     /**
@@ -97,16 +104,12 @@ class SubscriptionController extends Controller
      * @param  \App\Subscription  $subscription
      * @return \Illuminate\Http\Response
      */
-    public function destroy($subscription_id)
+    public function destroy(Commerce $commerce,Subscription $subscription)
     {
-        $subs = Subscription::findOrFail($subscription_id);
-
-        foreach($subs->services() as $service){
-            $ids[] = $service->id;
-        }
-        $subs->services()->detach($ids);
-
-        $subs->delete();
+        $subscription->services()->detach();
+        
+        $subscription->delete();
+        
         return ["code" => "200", "meesage" => "Eliminado"];
     }
 }
