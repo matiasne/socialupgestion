@@ -39,5 +39,9 @@ class Commerce extends Model
     public function providers(){
         return $this->hasMany("App\Provider");
     }
+
+    public function sales(){
+        return $this->hasMany("App\Sale");
+    }
     
 }
