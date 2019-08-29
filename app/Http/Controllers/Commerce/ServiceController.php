@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 
 use App\Commerce;
 use App\Service;
-use App\Commerce;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ServiceStoreRequest;
