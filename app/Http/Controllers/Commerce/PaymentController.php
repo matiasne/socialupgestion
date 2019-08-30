@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Commerce;
+use App\Http\Controllers\Controller;
 use App\Payment;
+use App\Commerce;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -12,9 +13,10 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Commerce $commerce)
     {
-        //
+        $pay = $commerce->payments()->get();
+        return $pay;
     }
 
     /**
@@ -22,9 +24,18 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(Request $request,  Commerce $commerce)
     {
-        //
+        $Payment = Payment::create([
+            "child_table" => $request->child_table,
+            "enum_type" => $request->enum_type,
+            "status" => $request->status,
+            "total_cost" => $request->total_cost,
+            "client_id" => $request->client_id,
+            "commerce_id" => $commerce->id
+        ]);     
+
+        return ["code" => "200", "message" =>"success", "data" => $Payment];
     }
 
     /**
@@ -33,10 +44,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -44,9 +52,9 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(Commerce $commerce, Payment $payment)
     {
-        //
+        return $payment;
     }
 
     /**
@@ -67,9 +75,19 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, Payment $commerce_id, $payment_id)
     {
-        //
+        $payment = Payment::findOrFail($payment_id);
+
+        $payment->update([
+            "child_table" => $request->child_table,
+            "enum_type" => $request->enum_type,
+            "status" => $request->status,
+            "total_cost" => $request->total_cost
+        ]);
+        $payment->save();
+
+        return ["Status" => "200", "message" => "Actualizado", "data" => $payment];
     }
 
     /**
@@ -78,8 +96,10 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(Payment $commerce_id, $payment_id)
     {
-        //
+        $payment = Payment::findOrFail($payment_id);
+        $payment->delete();
+        return ["code" => "200", "meesage" => "Eliminado"];
     }
 }
