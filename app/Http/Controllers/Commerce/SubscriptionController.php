@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\SubscriptionRepository;
 
 use App\Subscription;
 use App\Commerce;
@@ -10,7 +11,15 @@ use App\Http\Requests\SubscriptionStoreRequest;
 use App\Http\Requests\SubscriptionUpdateRequest;
 
 class SubscriptionController extends Controller
-{
+{   
+
+    protected $Subsrepo;
+
+    public function __construct(SubscriptionRepository $sub)
+    {
+        $this->Subsrepo = $sub;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +27,7 @@ class SubscriptionController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        $subs = $commerce->subscription()->get();
-        return $subs;
+        return $this->Subsrepo->getall($commerce);
     }    
 
     /**
@@ -32,25 +40,8 @@ class SubscriptionController extends Controller
     {   
         $data = $request->validated();
 
-        $subs = Subscription::create([
-            
-            "commerce_id" =>  $commerce->id,  
-            "client_id" => $request->client_id,
-            "employe_id" => $request->employe_id,
-            "enum_start_payment" => $request->enum_start_payment,
-            "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "period" => $request->period,
-            "start_date" => $request->start_date
+        return $this->Subsrepo->storeSubscription($request,$commerce);
 
-        ]); 
-        
-        foreach ($request['services_ids'] as $service_id){
-            $subs->services()->attach($service_id);
-        }
-            
-
-        return ["code" => "200", "message" =>"success", "data" => $subs];
     }
 
     /**
@@ -61,7 +52,7 @@ class SubscriptionController extends Controller
      */
     public function show(Commerce $commerce, Subscription $subscription)
     {
-        return $subscription;
+        return $this->Subsrepo->getone($subscription);
     }
 
    
@@ -74,27 +65,9 @@ class SubscriptionController extends Controller
      */
     public function update(SubscriptionUpdateRequest $request, Commerce $commerce, Subscription $subscription)
     {
-       /* $subs = Subscription::findOrFail($subscription_id);*/
-        
-        $subscription->update([
-            "commerce_id" =>  $commerce->id,  
-            "client_id" => $request->client_id,
-            "employe_id" => $request->employe_id,
-            "enum_start_payment" => $request->enum_start_payment,
-            "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "period" => $request->period,
-            "start_date" => $request->start_date
-        ]);
+        $data = $request->validated();
 
-        $subscription->services()->detach();
-
-        foreach ($request['services_ids'] as $service_id)
-            $subscription->services()->attach($service_id);
-
-        $subscription->save();
-
-        return ["code" => "200", "message" => "Actualizado", "data" => $subscription];
+        return $this->Subsrepo->updateSubscription($request,$commerce,$subscription);
 
     }
 
@@ -106,10 +79,6 @@ class SubscriptionController extends Controller
      */
     public function destroy(Commerce $commerce,Subscription $subscription)
     {
-        $subscription->services()->detach();
-        
-        $subscription->delete();
-        
-        return ["code" => "200", "meesage" => "Eliminado"];
+        return $this->Subsrepo->destroySubscription($subscription);
     }
 }

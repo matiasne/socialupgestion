@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\SaleRepository;
 
 use App\Sale;
 use App\Commerce;
@@ -13,6 +14,12 @@ use App\Http\Requests\SaleUpdateRequest;
 
 class SaleController extends Controller
 {
+    protected $salerepo;
+
+    public function __construct(SaleRepository $pagare)
+    {
+        $this->salerepo = $pagare;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +27,7 @@ class SaleController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        return $commerce->sales()->get();
+        return $this->salerepo->getall($commerce);
     }
 
 
@@ -34,21 +41,7 @@ class SaleController extends Controller
     {   
        $data = $request->validated();
       
-        $sale = Sale::create([
-            "client_id" => $request->client_id,
-            "commerce_id" =>$commerce->id,
-            "employe_id" => $request->employe_id,
-            "creation_date" => $request->creation_date,
-            "description" => $request->description,
-        ]);
-
-        foreach ($request['products'] as $product){
-            $sale->products()->attach($product);
-        }
-
-        $sale->save();
-
-        return ["code" => "200", "message" =>"success", "data" => $sale];
+       return $this->salerepo->storeSale($request,$commerce);
     }
 
     /**
@@ -59,8 +52,7 @@ class SaleController extends Controller
      */
     public function show(Commerce $commerce,Sale $sale)
     {
-        return $sale;
-        //->products()->get();
+        return $this->salerepo->getone($sale);
     }
 
 
@@ -75,26 +67,8 @@ class SaleController extends Controller
     {
         
         $data = $request->validated();
-
-        $sale->update([
-            "client_id" => $request->client_id,
-            "commerce_id" =>$commerce->id,
-            "employe_id" => $request->employe_id,
-            "creation_date" => $request->creation_date,
-            "description" => $request->description
-
-        ]);
         
-        $sale->products()->detach();
-
-        foreach ($request['products'] as $product){
-            $sale->products()->attach($product);
-        }
-
-        $sale->save();
-
-        return ["code" => "200", "message" =>"success", "data" => $sale];    
-        
+        return $this->salerepo->updateSale($request,$commerce,$sale);
     }
 
     /**
@@ -105,8 +79,6 @@ class SaleController extends Controller
      */
     public function destroy(Commerce $commerce,Sale $sale)
     {
-        $sale->delete();
-
-        return ["code" => "200", "meesage" => "Eliminado"];
+        return $this->salerepo->destroySale($sale);
     }
 }
