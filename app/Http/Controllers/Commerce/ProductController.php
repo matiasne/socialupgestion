@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\ImgRepository;
 
 use App\Product;
 use App\Commerce;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 
 
 class ProductController extends Controller
-{
+{   
+    protected $img;
+
+    public function __construct(ImgRepository $img)
+    {
+        $this->img = $img;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +40,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, Commerce $commerce)
     {       
+        $data = $request->validated();
 
         $prod = Product::create([
             "name" => $request->name,
@@ -39,7 +50,8 @@ class ProductController extends Controller
             "code"=>$request->code,
             "commerce_id" =>  $commerce->id,  
             "provider_id" => $request->provider_id,
-            "category_id" => $request->category_id
+            "category_id" => $request->category_id,
+            "imgproduct" => $this->img->imgProduct($request),
         ]);     
             
         return ["code" => "200", "message" =>"success", "data" => $prod];
@@ -64,21 +76,29 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $commerce_id, $product_id)
+    public function update(ProductUpdateRequest $request, Commerce $commerce, Product $product)
     {
+        /*$data = $request->validated();
 
-        $product = Product::findOrFail($product_id);
-       
+        */
+        $file = $request->url_img;
         
+        // La imagen la subiremos a un directorio llamado 'uploads', el cual creamos manualmente en nuestro servidor
+        $file->move('img', $file->getClientOriginalName());
+
+        $filename = $file->getClientOriginalName();
+
+    
         $product->update([
             "name" => $request->name,
             "description" => $request->description,
             "stock" => $request->stock,
             "price" => $request->price,
             "code"=>$request->code,
-            "commerce_id" => $commerce_id,// $user->commerce->id,  
+            "commerce_id" => $commerce->id,// $user->commerce->id,  
             "provider_id" => $request->provider_id,
-            "category_id" => $request->category_id
+            "category_id" => $request->category_id,
+            "imgproduct" => 'http://localhost/socialupgestion/public/img/'.$filename
         ]);
         
         $product->save();
@@ -86,10 +106,10 @@ class ProductController extends Controller
         return ["code" => "200", "message" => "Actualizado", "data" => $product];
     }
 
-    public function destroy($commerce_id,$product_id)
+    public function destroy(Commerce $commerce, Product $product_id)
     {
-        $product = Product::findOrFail($product_id);
         $product->delete();
+
         return ["code" => "200", "meesage" => "Eliminado"];
     }
 

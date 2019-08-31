@@ -29,7 +29,8 @@ class SaleUpdateRequest extends FormRequest
             'employe_id' => 'required|integer',
             'creation_date' => 'required|date',
             'description' => 'required|string|max:150',
-            'products' => 'required|array' 
+            'products' => 'required|array',
+            'total_cost' => 'required|integer'
         ];
     }
 
@@ -40,7 +41,8 @@ class SaleUpdateRequest extends FormRequest
             'employe_id.required' => 'employe_id is required for update!',
             'creation_date.required' => 'creation_date is required for update!',
             'description.required' => 'description is required for update!',
-            'products.required' => 'products is required for update!'
+            'products.required' => 'products is required for update!',
+            'total_cost.required' => 'total_cost is required for update!'
         ];
     }
 }

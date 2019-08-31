@@ -28,7 +28,8 @@ class SaleStoreRequest extends FormRequest
             'employe_id' => 'required|integer',
             'creation_date' => 'required|date',
             'description' => 'required|string|max:150',
-            'products' => 'required|array'
+            'products' => 'required|array',
+            'total_cost' => 'required|integer'
         ];
     }
 
@@ -39,7 +40,8 @@ class SaleStoreRequest extends FormRequest
             'employe_id.required' => 'employe_id is required!',
             'creation_date.required' => 'creation_date is required!',
             'description.required' => 'description is required!',
-            'products.required' => 'products is required!'
+            'products.required' => 'products is required!',
+            'total_cost.required' => 'total_cost is required!'
             
         ];
     }

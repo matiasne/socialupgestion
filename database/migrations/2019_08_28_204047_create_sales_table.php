@@ -23,6 +23,7 @@ class CreateSalesTable extends Migration
             $table->foreign('employe_id')->references('id')->on('employes');
             $table->date('creation_date');
             $table->string('description');
+            $table->integer('total_cost');
             $table->timestamps();
         });
     }

@@ -68,12 +68,9 @@ class EmployeController extends Controller
      */
     public function update(EmployeUpdateRequest $request,$commerce_id, $employe_id)
     {   
-
         $employe = Employe::findOrFail($employe_id);
 
-
         $data = $request->validated();
-
 
         $employe->update([
             "name" => $request->name,

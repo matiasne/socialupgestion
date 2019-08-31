@@ -14,7 +14,8 @@ class Product extends Model
         'code',
         'commerce_id',
         'provider_id',
-        'category_id'
+        'category_id',
+        'imgproduct'
 
     ];
 
