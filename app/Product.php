@@ -13,7 +13,8 @@ class Product extends Model
         'price',
         'commerce_id',
         'provider_id',
-        'category_id'
+        'category_id',
+        'imgproduct'
 
     ];
 

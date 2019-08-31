@@ -1,12 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Repositories\ImgRepository;
 
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
-{
+{   
+    protected $img;
+
+    public function __construct(ImgRepository $img)
+    {
+        $this->img = $img;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +43,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->remember_token = str_random(20);
+        $user->imguser = $this->img->imgUser($request);
         $user->save();
 
         return ["Status" => "200", "Usuario" => $user];

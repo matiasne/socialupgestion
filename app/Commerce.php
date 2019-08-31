@@ -12,6 +12,7 @@ class Commerce extends Model
         'name', 
         'address', 
         'phone_number',
+        'imgcommerce',
     ];
 
     public function products(){

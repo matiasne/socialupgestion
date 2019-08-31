@@ -1,13 +1,23 @@
 <?php
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\ImgRepository;
 
 use App\Commerce;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\CommerceStoreRequest;
+use App\Http\Requests\CommerceUpdateRequest;
 
 class CommerceController extends Controller
-{
+{   
+    protected $img;
+
+    public function __construct(ImgRepository $img)
+    {
+        $this->img = $img;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,15 +30,6 @@ class CommerceController extends Controller
         return $commerces;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,11 +39,13 @@ class CommerceController extends Controller
      */
     public function store(CommerceStoreRequest $request)
     {
-        
+        $data = $request->validated();
+
         $commerce = $request->user('api')->commerces()->create([
             "name" => $request->name,
             "address" => $request->address,
-            "phone_number" => $request->phone_number,    
+            "phone_number" => $request->phone_number,
+            "imgcommerce"  => $this->img->imgCommerce($request)
         ]);          
 
         return ["code" => "200", "message" =>"success", "data" => $commerce];
@@ -61,26 +64,16 @@ class CommerceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Commerce  $commerce
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Commerce $commerce)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Commerce  $commerce
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Commerce $commerce)
+    public function update(CommerceUpdateRequest $request, Commerce $commerce)
     {
-        //
+        $data = $request->validated();
+
         $commerce->update([
             "name" => $request->name,
             "address" => $request->address,
@@ -89,7 +82,6 @@ class CommerceController extends Controller
         
         $commerce->save();
 
-        
         return ["code" => "200", "message" => "Actualizado", "data" => $commerce];
     }
 

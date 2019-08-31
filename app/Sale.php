@@ -11,7 +11,8 @@ class Sale extends Model
         'commerce_id',
         'employe_id',
         'creation_date',
-        'description'
+        'description',
+        'total_cost'
     ];
 
     public function products(){

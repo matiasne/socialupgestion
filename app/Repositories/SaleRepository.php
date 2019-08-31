@@ -23,6 +23,7 @@ class SaleRepository{
             "employe_id" => $request->employe_id,
             "creation_date" => $request->creation_date,
             "description" => $request->description,
+            "total_cost" => $request->total_cost
         ]);
 
         foreach ($request['products'] as $product){
@@ -47,7 +48,8 @@ class SaleRepository{
             "commerce_id" =>$commerce->id,
             "employe_id" => $request->employe_id,
             "creation_date" => $request->creation_date,
-            "description" => $request->description
+            "description" => $request->description,
+            "total_cost" => $request->total_cost
 
         ]);
         
