@@ -36,6 +36,7 @@ class ProductController extends Controller
             "description" => $request->description,
             "stock" => $request->stock,
             "price" => $request->price,
+            "code"=>$request->code,
             "commerce_id" =>  $commerce->id,  
             "provider_id" => $request->provider_id,
             "category_id" => $request->category_id
@@ -74,6 +75,7 @@ class ProductController extends Controller
             "description" => $request->description,
             "stock" => $request->stock,
             "price" => $request->price,
+            "code"=>$request->code,
             "commerce_id" => $commerce_id,// $user->commerce->id,  
             "provider_id" => $request->provider_id,
             "category_id" => $request->category_id

@@ -15,6 +15,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
+           $table->integer('commerce_id');
+           $table->integer('client_id');
+           $table->foreign('commerce_id')->references('id')->on('commerces');
+           $table->foreign('client_id')->references('id')->on('clients');
+            $table->string('child_table');
+            $table->string('enum_type');
+            $table->string('status');
+            $table->string('total_cost');
             $table->timestamps();
         });
     }
