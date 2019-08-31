@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->foreign('provider_id')->references('id')->on('providers')->nullable();
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->nullable();
+            $table->integer('code');
             $table->string('description');
             $table->string('price');
             $table->Integer('stock');
