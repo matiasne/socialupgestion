@@ -11,6 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+$this->crearComercio();
     }
+    private function crearComercio()
+    {
+    $name= Name::create(['name'=>'libertad',
+    $address=Address::create
+    ]);
+    }
+   
 }
