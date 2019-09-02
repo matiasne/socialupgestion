@@ -15,6 +15,7 @@ class Commerce extends Model
         'imgcommerce',
     ];
 
+
     public function products(){
 
         return $this->hasMany('App\Product');
