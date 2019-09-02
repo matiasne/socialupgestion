@@ -29,6 +29,7 @@ class ClientController extends Controller
             "address" => $request->address,
             "phone_nunmber" => $request->phone_nunmber,
             "email" => $request->email,
+            'positive_credit'=>$request->positive_credit,
             "commerce_id" => $commerce->id
         ]);     
 
@@ -62,6 +63,7 @@ class ClientController extends Controller
             "name" => $request->name,
             "address" => $request->address,
             "phone_nunmber" => $request->phone_nunmber,
+            'positive_credit'=>$request->positive_credit,
             "email" => $request->email
         ]);
         

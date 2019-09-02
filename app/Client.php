@@ -11,6 +11,7 @@ class Client extends Model
         'name', 
         'address', 
         'phone_nunmber',
+        'positive_credit',
         'email',
     ];
 }

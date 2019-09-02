@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->string('address');
             $table->string('phone_nunmber');
             $table->string('email');
+            $table->integer('positive_credit')->unsigned();
             $table->timestamps();
         });
     }
