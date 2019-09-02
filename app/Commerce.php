@@ -53,4 +53,7 @@ class Commerce extends Model
         return $this->hasMany("App\Service");
     }
     
+    public function cajas(){
+        return $this->hasMany("App\Caja");
+    }
 }

@@ -44,4 +44,5 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('commerces.sales','Commerce\SaleController');
     Route::apiResource('commerces.subscriptions','Commerce\SubscriptionController');
     Route::apiResource('commerces.payments','Commerce\PaymentController');
+    Route::apiResource('commerces.cajas','Commerce\CajaController');
 });

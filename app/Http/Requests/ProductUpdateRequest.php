@@ -29,7 +29,8 @@ class ProductUpdateRequest extends FormRequest
             'stock' => 'required|integer',
             'price' => 'required|integer',
             'provider_id' => 'required|integer',
-            'category_id' => 'required|integer'
+            'category_id' => 'required|integer',
+            'code' => 'required|integer'
         ];
     }
 
@@ -41,7 +42,8 @@ class ProductUpdateRequest extends FormRequest
             'stock.required' => 'stock is required for update!',
             'price.required' => 'price is required for update!',
             'provider_id.required' => 'provider_id is required for update!',
-            'category_id.required' => 'category_id is required for update!'
+            'category_id.required' => 'category_id is required for update!',
+            'code.required' => 'code is required for update!'
         ];
     }
 }

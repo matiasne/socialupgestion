@@ -5,11 +5,22 @@ namespace App\Repositories;
 use App\Commerce;
 use App\Sale;
 
+use App\Repositories\PaymentRepository;
+
+
 use App\Http\Requests\SaleStoreRequest;
 use App\Http\Requests\SaleUpdateRequest;
 
 class SaleRepository{
 
+    protected $pagare;
+
+    public function __construct(PaymentRepository $pagare)
+    {
+        $this->pagare = $pagare;
+    }
+
+    
     public function getall(Commerce $commerce){
         
         return $commerce->sales()->get();
@@ -23,7 +34,8 @@ class SaleRepository{
             "employe_id" => $request->employe_id,
             "creation_date" => $request->creation_date,
             "description" => $request->description,
-            "total_cost" => $request->total_cost
+            "total_cost" => $request->total_cost,
+            "enum_estatus" => $request->enum_estatus
         ]);
 
         foreach ($request['products'] as $product){
@@ -31,6 +43,8 @@ class SaleRepository{
         }
 
         $sale->save();
+
+        $this->pagare->generatePaymentSale($sale->id,$request->total_cost,$request->client_id,$commerce->id,$request->enum_estatus);
 
         return ["code" => "200", "message" =>"success", "data" => $sale];
 
@@ -49,8 +63,8 @@ class SaleRepository{
             "employe_id" => $request->employe_id,
             "creation_date" => $request->creation_date,
             "description" => $request->description,
-            "total_cost" => $request->total_cost
-
+            "total_cost" => $request->total_cost,
+            "enum_estatus" => $request->enum_estatus
         ]);
         
         $sale->products()->detach();
@@ -60,6 +74,8 @@ class SaleRepository{
         }
 
         $sale->save();
+        
+        $this->pagare->updatePaymentSale($sale->id,$request->total_cost,$request->client_id,$commerce->id);
 
         return ["code" => "200", "message" =>"success", "data" => $sale];  
     }

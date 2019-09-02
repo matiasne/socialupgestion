@@ -5,10 +5,20 @@ namespace App\Repositories;
 use App\Subscription;
 use App\Commerce;
 
+use App\Repositories\PaymentRepository;
+
 use App\Http\Requests\SubscriptionStoreRequest;
 use App\Http\Requests\SubscriptionUpdateRequest;
 
 class SubscriptionRepository{
+
+    protected $pagare;
+
+    public function __construct(PaymentRepository $pagare)
+    {
+        $this->pagare = $pagare;
+    }
+
 
     public function getall(Commerce $commerce){
         
@@ -33,7 +43,10 @@ class SubscriptionRepository{
         foreach ($request['services_ids'] as $service_id){
             $subs->services()->attach($service_id);
         }
-            
+        
+        $subs->save();
+
+        $this->pagare->generatePaymentSubscription($subs->id,$request->enum_start_payment,$request->total_cost,$request->client_id,$commerce->id);
 
         return ["code" => "200", "message" =>"success", "data" => $subs];
 
@@ -63,6 +76,8 @@ class SubscriptionRepository{
             $subscription->services()->attach($service_id);
 
         $subscription->save();
+
+        $this->pagare->updatePaymentSubscription($subscription->id,$request->enum_start_payment,$request->total_cost,$request->client_id,$commerce->id);
 
         return ["code" => "200", "message" => "Actualizado", "data" => $subscription];
     }

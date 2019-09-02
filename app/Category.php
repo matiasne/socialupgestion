@@ -19,9 +19,4 @@ class Category extends Model
         
     }
 
-
-     public function Nicolas(Type $var = null)
-    {
-        # code...
-    }
 }

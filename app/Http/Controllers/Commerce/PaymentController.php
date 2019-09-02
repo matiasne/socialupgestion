@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\PaymentRepository;
+
 use App\Payment;
 use App\Commerce;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
-{
+{   
+    protected $paym;
+
+    public function __construct(PaymentRepository $paym)
+    {
+        $this->paym = $paym;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,16 +66,6 @@ class PaymentController extends Controller
         return $payment;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -75,9 +74,10 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $commerce_id, $payment_id)
+    public function update(Request $request, Commerce $commerce, Payment $payment)
     {
-        $payment = Payment::findOrFail($payment_id);
+        
+        /* $payment = Payment::findOrFail($payment_id);
 
         $payment->update([
             "child_table" => $request->child_table,
@@ -87,7 +87,9 @@ class PaymentController extends Controller
         ]);
         $payment->save();
 
-        return ["Status" => "200", "message" => "Actualizado", "data" => $payment];
+        return ["Status" => "200", "message" => "Actualizado", "data" => $payment];*/
+
+        $this->paym->
     }
 
     /**
