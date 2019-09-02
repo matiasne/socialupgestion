@@ -10,6 +10,7 @@ use App\Http\Requests\SubscriptionUpdateRequest;
 class ImgRepository{
 
     public function imgProduct( ProductStoreRequest $request){
+        
         $file = $request->imgproduct;
     
         $file->move('imgProducts', $file->getClientOriginalName());

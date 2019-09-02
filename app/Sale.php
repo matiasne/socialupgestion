@@ -12,7 +12,8 @@ class Sale extends Model
         'employe_id',
         'creation_date',
         'description',
-        'total_cost'
+        'total_cost',
+        'enum_estatus'
     ];
 
     public function products(){

@@ -29,7 +29,8 @@ class SaleStoreRequest extends FormRequest
             'creation_date' => 'required|date',
             'description' => 'required|string|max:150',
             'products' => 'required|array',
-            'total_cost' => 'required|integer'
+            'total_cost' => 'required|integer',
+            'enum_estatus' => 'required|string'
         ];
     }
 
@@ -41,7 +42,8 @@ class SaleStoreRequest extends FormRequest
             'creation_date.required' => 'creation_date is required!',
             'description.required' => 'description is required!',
             'products.required' => 'products is required!',
-            'total_cost.required' => 'total_cost is required!'
+            'total_cost.required' => 'total_cost is required!',
+            'enum_estatus.required' => 'enum_estatus is required!'
             
         ];
     }

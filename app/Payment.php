@@ -14,4 +14,10 @@ class Payment extends Model
         'status',
         'total_cost',
     ];
+
+
+    public function entrys()
+    {
+        return $this->belongsTo('App\Entry');
+    }
 }

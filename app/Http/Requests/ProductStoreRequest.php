@@ -35,7 +35,8 @@ class ProductStoreRequest extends FormRequest
             'price' => 'required|integer',
             'provider_id' => 'required|integer',
             'category_id' => 'required|integer',
-            'imgproduct' => 'required|mimes:jpeg,bmp,png,jpg'
+            'imgproduct' => 'required|mimes:jpeg,bmp,png,jpg',
+            'code' => 'required|integer'
         ];
     }
 
@@ -48,7 +49,8 @@ class ProductStoreRequest extends FormRequest
             'price.required' => 'price is required!',
             'provider_id.required' => 'provider_id is required!',
             'category_id.required' => 'category_id is required!',
-            'imgproduct.required' => 'imgproduct is required!'
+            'imgproduct.required' => 'imgproduct is required!',
+            'code.required' => 'code is required!'
         ];
     }
 }
