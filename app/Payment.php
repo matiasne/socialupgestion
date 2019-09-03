@@ -11,7 +11,7 @@ class Payment extends Model
         'client_id', 
         'child_table', 
         'enum_type',
-        'status',
+        'enum_status',
         'total_cost',
     ];
 
@@ -19,5 +19,10 @@ class Payment extends Model
     public function entrys()
     {
         return $this->belongsTo('App\Entry');
+    }
+
+    public function commerces()
+    {
+        return $this->belongsTo('App\Commmerce');
     }
 }

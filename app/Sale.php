@@ -23,4 +23,6 @@ class Sale extends Model
     public function commerce(){
         return $this->belongsTo("App\Commerce");
     }
+
+    
 }

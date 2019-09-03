@@ -14,7 +14,10 @@ class CreateEgressesTable extends Migration
     public function up()
     {
         Schema::create('egresses', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id');            
+            $table->integer('caja_id');
+            $table->foreign('caja_id')->references('id')->on('cajas');
+            $table->string('description');
             $table->integer('total');
             $table->timestamps();
         });

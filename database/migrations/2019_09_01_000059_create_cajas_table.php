@@ -15,6 +15,7 @@ class CreateCajasTable extends Migration
     {
         Schema::create('cajas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->integer('commerce_id');
             $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->integer('total');

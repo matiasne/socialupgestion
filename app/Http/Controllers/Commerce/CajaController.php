@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 
 use App\Caja;
+use App\Commerce;
+
 use Illuminate\Http\Request;
 
 class CajaController extends Controller
@@ -13,20 +15,11 @@ class CajaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Commerce $commerce)
     {
-        //
+        return $commerce->cajas()->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +27,15 @@ class CajaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Commerce $commerce)
     {
-        //
+        $caja = Caja::create([
+            "name" => $request->name,
+            "commerce_id" =>  $commerce->id,
+            "total" => $request->total
+        ]);
+
+        return ["code" => "200", "message" =>"success", "data" => $caja];
     }
 
     /**
@@ -45,20 +44,9 @@ class CajaController extends Controller
      * @param  \App\Caja  $caja
      * @return \Illuminate\Http\Response
      */
-    public function show(Caja $caja)
+    public function show(Commerce $commerce,Caja $caja)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Caja  $caja
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Caja $caja)
-    {
-        //
+        return $caja;
     }
 
     /**
@@ -68,9 +56,18 @@ class CajaController extends Controller
      * @param  \App\Caja  $caja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Caja $caja)
+    public function update(Request $request, Commerce $commerce,Caja $caja)
     {
-        //
+        $caja->update([
+            "name" => $request->name,
+            "commerce_id" =>  $commerce->id,
+            "total" => $request->total
+        ]);
+
+        $caja->save();
+
+        return ["code" => "200", "message" =>"success", "data" => $caja];
+
     }
 
     /**
@@ -79,8 +76,10 @@ class CajaController extends Controller
      * @param  \App\Caja  $caja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Caja $caja)
+    public function destroy(Commerce $commerce ,Caja $caja)
     {
-        //
+        $caja->delete();
+        
+        return ["code" => "200", "meesage" => "Eliminado"];
     }
 }

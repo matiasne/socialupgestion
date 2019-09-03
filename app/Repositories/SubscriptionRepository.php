@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Subscription;
 use App\Commerce;
+use App\Payment;
 
 use App\Repositories\PaymentRepository;
 
@@ -36,7 +37,8 @@ class SubscriptionRepository{
             "description" => $request->description,
             "total_cost" => $request->total_cost,
             "period" => $request->period,
-            "start_date" => $request->start_date
+            "start_date" => $request->start_date,
+            "enum_status" => $request->enum_status
 
         ]); 
         
@@ -46,7 +48,11 @@ class SubscriptionRepository{
         
         $subs->save();
 
-        $this->pagare->generatePaymentSubscription($subs->id,$request->enum_start_payment,$request->total_cost,$request->client_id,$commerce->id);
+        $datarequest= $request->all();
+
+        if($request->enum_start_payment == "ANTICIPADO")
+            $this->pagare->generatePayment($datarequest, $subs, $commerce->id,"SUBSCRIPTION");
+
 
         return ["code" => "200", "message" =>"success", "data" => $subs];
 
@@ -60,14 +66,10 @@ class SubscriptionRepository{
     public function updateSubscription(SubscriptionUpdateRequest $request , Commerce $commerce, Subscription $subscription){
         
         $subscription->update([
-            "commerce_id" =>  $commerce->id,  
-            "client_id" => $request->client_id,
-            "employe_id" => $request->employe_id,
-            "enum_start_payment" => $request->enum_start_payment,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
             "period" => $request->period,
-            "start_date" => $request->start_date
+            "enum_status" => $request->enum_status
         ]);
 
         $subscription->services()->detach();
@@ -76,9 +78,7 @@ class SubscriptionRepository{
             $subscription->services()->attach($service_id);
 
         $subscription->save();
-
-        $this->pagare->updatePaymentSubscription($subscription->id,$request->enum_start_payment,$request->total_cost,$request->client_id,$commerce->id);
-
+        
         return ["code" => "200", "message" => "Actualizado", "data" => $subscription];
     }
 

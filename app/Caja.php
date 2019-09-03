@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Caja extends Model
 {
     protected $fillable = [
+        'name',        
         'commerce_id', 
         'total'
     ];

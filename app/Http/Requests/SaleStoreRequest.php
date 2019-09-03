@@ -30,7 +30,8 @@ class SaleStoreRequest extends FormRequest
             'description' => 'required|string|max:150',
             'products' => 'required|array',
             'total_cost' => 'required|integer',
-            'enum_estatus' => 'required|string'
+            'enum_status' => 'required|string',
+            'caja' => 'required|integer'
         ];
     }
 
@@ -43,7 +44,8 @@ class SaleStoreRequest extends FormRequest
             'description.required' => 'description is required!',
             'products.required' => 'products is required!',
             'total_cost.required' => 'total_cost is required!',
-            'enum_estatus.required' => 'enum_estatus is required!'
+            'enum_status.required' => 'enum_status is required!',
+            'caja.required' => 'caja is required!'
             
         ];
     }

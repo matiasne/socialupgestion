@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Commerce;
 use App\Sale;
+use App\Payment;
 
 use App\Repositories\PaymentRepository;
 
@@ -13,11 +14,11 @@ use App\Http\Requests\SaleUpdateRequest;
 
 class SaleRepository{
 
-    protected $pagare;
+    protected $rPagare;
 
-    public function __construct(PaymentRepository $pagare)
+    public function __construct(PaymentRepository $rpagare)
     {
-        $this->pagare = $pagare;
+        $this->rPagare = $rpagare;
     }
 
     
@@ -35,7 +36,6 @@ class SaleRepository{
             "creation_date" => $request->creation_date,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
-            "enum_estatus" => $request->enum_estatus
         ]);
 
         foreach ($request['products'] as $product){
@@ -44,7 +44,11 @@ class SaleRepository{
 
         $sale->save();
 
-        $this->pagare->generatePaymentSale($sale->id,$request->total_cost,$request->client_id,$commerce->id,$request->enum_estatus);
+        $dataRequest = $request->all();
+
+        $data = $sale;
+
+        $this->rPagare->generatePayment($dataRequest,$data,$commerce->id,"SALE");
 
         return ["code" => "200", "message" =>"success", "data" => $sale];
 
@@ -59,12 +63,9 @@ class SaleRepository{
         
         $sale->update([
             "client_id" => $request->client_id,
-            "commerce_id" =>$commerce->id,
             "employe_id" => $request->employe_id,
-            "creation_date" => $request->creation_date,
             "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "enum_estatus" => $request->enum_estatus
+            "total_cost" => $request->total_cost
         ]);
         
         $sale->products()->detach();
@@ -74,8 +75,12 @@ class SaleRepository{
         }
 
         $sale->save();
+
+        $payment = Payment::where('child_table',$sale->id)->where('enum_type','SALE')->first();  
         
-        $this->pagare->updatePaymentSale($sale->id,$request->total_cost,$request->client_id,$commerce->id);
+        $data = $request->all();
+        
+        $this->rPagare->updatePayment($data,$payment);
 
         return ["code" => "200", "message" =>"success", "data" => $sale];  
     }

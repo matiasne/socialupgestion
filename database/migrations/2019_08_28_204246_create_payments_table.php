@@ -20,8 +20,8 @@ class CreatePaymentsTable extends Migration
             $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('child_table');
-            $table->enum('enum_type', ['VENTA','SUBSCRIPCION']);
-            $table->enum('status', ['PAGADO','PENDIENTE']);
+            $table->enum('enum_type', ['SALE','SUBSCRIPTION']);
+            $table->enum('enum_status', ['PAGADO','PENDIENTE','CANCELADO']);
             $table->string('total_cost');
             $table->timestamps();
         });
