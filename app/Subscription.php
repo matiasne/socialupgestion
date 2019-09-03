@@ -14,6 +14,7 @@ class Subscription extends Model
             'start_date',
             'period',
             'enum_start_payment',
+            'enum_status',
             'total_cost'
         ];
 

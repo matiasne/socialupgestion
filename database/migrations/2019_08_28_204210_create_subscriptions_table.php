@@ -23,7 +23,8 @@ class CreateSubscriptionsTable extends Migration
             $table->foreign('employe_id')->references('id')->on('employes');
             $table->date('start_date');
             $table->integer('period');            
-            $table->enum('enum_start_payment', ['PAGADO','PENDIENTE']);
+            $table->enum('enum_start_payment', ['ANTICIPADO','VENCIDO']);
+            $table->enum('enum_status', ['ACTIVO','CANCELADO']);
             $table->integer('total_cost');
             
             $table->timestamps();

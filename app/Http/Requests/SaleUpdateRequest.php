@@ -31,7 +31,8 @@ class SaleUpdateRequest extends FormRequest
             'description' => 'required|string|max:150',
             'products' => 'required|array',
             'total_cost' => 'required|integer',
-            'enum_estatus' => 'required|string'
+            'enum_status' => 'required|string',
+            'caja' => 'required|integer'
         ];
     }
 
@@ -44,7 +45,8 @@ class SaleUpdateRequest extends FormRequest
             'description.required' => 'description is required for update!',
             'products.required' => 'products is required for update!',
             'total_cost.required' => 'total_cost is required for update!',
-            'enum_estatus.required' => 'enum_estatus is required for update!'
+            'enum_status.required' => 'enum_status is required for update!',
+            'caja.required' => 'caja is required!'
         ];
     }
 }

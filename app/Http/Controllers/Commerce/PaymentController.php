@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {   
-    protected $paym;
+    protected $rPaym;
 
     public function __construct(PaymentRepository $paym)
     {
-        $this->paym = $paym;
+        $this->rPaym = $paym;
     }
 
     /**
@@ -25,6 +25,7 @@ class PaymentController extends Controller
     public function index(Commerce $commerce)
     {
         $pay = $commerce->payments()->get();
+
         return $pay;
     }
 
@@ -35,16 +36,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request,  Commerce $commerce)
     {
-        $Payment = Payment::create([
-            "child_table" => $request->child_table,
-            "enum_type" => $request->enum_type,
-            "status" => $request->status,
-            "total_cost" => $request->total_cost,
-            "client_id" => $request->client_id,
-            "commerce_id" => $commerce->id
-        ]);     
-
-        return ["code" => "200", "message" =>"success", "data" => $Payment];
+       
     }
 
     /**
@@ -76,20 +68,9 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Commerce $commerce, Payment $payment)
     {
-        
-        /* $payment = Payment::findOrFail($payment_id);
+        return $this->rPaym->updatePayment($request,$payment);
 
-        $payment->update([
-            "child_table" => $request->child_table,
-            "enum_type" => $request->enum_type,
-            "status" => $request->status,
-            "total_cost" => $request->total_cost
-        ]);
-        $payment->save();
-
-        return ["Status" => "200", "message" => "Actualizado", "data" => $payment];*/
-
-        $this->paym->
+        //$payment->child_table, $request->status,$payment->enum_type,$request->detalle,$request->caja
     }
 
     /**
@@ -98,10 +79,8 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $commerce_id, $payment_id)
+    public function destroy(Commerce $commerce, Payment $payment)
     {
-        $payment = Payment::findOrFail($payment_id);
-        $payment->delete();
-        return ["code" => "200", "meesage" => "Eliminado"];
+
     }
 }

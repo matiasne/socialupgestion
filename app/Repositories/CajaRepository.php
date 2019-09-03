@@ -7,33 +7,33 @@ use App\Caja;
 
 class CajaRepository{
 
-    public function generateEntry($payment,$total,$commerce){
+    public function generateEntry($payment,$total,$commerce,$description,$caja){
 
         $entry = Entry::create([
+            "caja_id" => $caja,
             "total" => $total,
             "payment_id" =>$payment,
-        ]);
-        
-        $this->StoreCaja($total,$commerce);
+            "description" => $description
+        ]);  
     }
 
-    public function generateEgress($payment,$total,$commerce){
+    public function generateEgress($payment,$total,$commerce,$description,$caja){
         $egress = Egress::create([
+            "caja_id" => $caja,
             "total" => $total,
-            "payment_id" =>$payment,
+            "description" => $description
         ]);
-        
-        $this->StoreCaja($total,$commerce);
     }
 
-    public function StoreCaja($total,$commerce){
+    public function StoreCaja($name,$total,$commerce){
 
-        $entry = Caja::create([
+        $caja = Caja::create([
+            "name" => $name,
             "total" => $total,
             "commerce_id" => $commerce,
         ]);
 
-        $entry->save();
+        $caja->save();
     }
   
 }

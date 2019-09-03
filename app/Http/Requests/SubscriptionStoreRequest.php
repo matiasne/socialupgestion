@@ -29,6 +29,7 @@ class SubscriptionStoreRequest extends FormRequest
             'start_date' => 'required|date',
             'period'=> 'required|integer',
             'enum_start_payment' => 'required|string',
+            'enum_status' => 'required|string',
             'total_cost' => 'required|integer'
         ];
     }
@@ -41,6 +42,7 @@ class SubscriptionStoreRequest extends FormRequest
             'start_date.required' => 'start_date is required!',
             'period.required' => 'period is required!',
             'enum_start_payment.required' => 'enum_start_payment is required!',
+            'enum_status.required' => 'enum_status is required!',
             'total_cost.required' => 'total_cost is required!'
         ];
     }

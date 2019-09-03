@@ -8,7 +8,9 @@ class Entry extends Model
 {   
     protected $fillable = [
         'total',
-        'payment_id'
+        'payment_id',
+        'caja_id',
+        'description'
     ];
     
     public function cajas()
