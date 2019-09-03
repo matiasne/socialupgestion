@@ -16,11 +16,14 @@ class Sale extends Model
         'enum_estatus'
     ];
 
-    public function products(){
-        return $this->belongsToMany("App\Product");
-    }
+    protected $with = ['productsDetails'];
+
 
     public function commerce(){
         return $this->belongsTo("App\Commerce");
+    }
+
+    public function productsDetails(){
+        return $this->hasMany("App\SalesProductsDetail");
     }
 }

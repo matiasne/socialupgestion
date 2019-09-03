@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Commerce;
 use App\Sale;
+use App\SalesProductDetail;
 
 use App\Repositories\PaymentRepository;
 
@@ -33,17 +34,27 @@ class SaleRepository{
             "commerce_id" =>$commerce->id,
             "employe_id" => $request->employe_id,
             "creation_date" => $request->creation_date,
-            "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "enum_estatus" => $request->enum_estatus
+            "description" => $request->description,     
+            "total_cost" =>$request->total_cost     
         ]);
 
         foreach ($request['products'] as $product){
-            $sale->products()->attach($product);
+
+            $productObj = json_decode ($product);
+
+            
+
+            $sale->productsDetails()->create([
+                "product_id" => $productObj->id,
+                "product_amount" => $productObj->amount,
+                "product_price" => $productObj->price
+            ]);
+           
         }
 
         $sale->save();
 
+        
         $this->pagare->generatePaymentSale($sale->id,$request->total_cost,$request->client_id,$commerce->id,$request->enum_estatus);
 
         return ["code" => "200", "message" =>"success", "data" => $sale];
@@ -70,7 +81,15 @@ class SaleRepository{
         $sale->products()->detach();
 
         foreach ($request['products'] as $product){
-            $sale->products()->attach($product);
+            
+            $productObj = json_decode ($product);
+
+            $sale->productsDetails()->create([
+                "product_id" => $product->id,
+                "product_amount" => $product->amount,
+                "product_price" => $product->price
+            ]);
+            
         }
 
         $sale->save();

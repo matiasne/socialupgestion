@@ -39,4 +39,8 @@ class Product extends Model
     public function sales(){
         return $this->belongsToMany('App\Sale');
     }
+
+    public function salesDetail(){
+        return $this->hasMany("App\SalesProductsDetail");
+    }
 }
