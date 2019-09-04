@@ -15,7 +15,9 @@ class CreateClosingsTable extends Migration
     {
         Schema::create('closings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('total');
+            $table->integer('caja_id');
+            $table->foreign('caja_id')->references('id')->on('cajas');
+            $table->date('date_closing');
             $table->timestamps();
         });
     }

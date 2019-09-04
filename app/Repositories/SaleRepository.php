@@ -37,6 +37,7 @@ class SaleRepository{
             "creation_date" => $request->creation_date,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
+            "enum_status_sale" => $request->enum_status,            
         ]);
 
         foreach ($request['products'] as $product){
@@ -59,7 +60,8 @@ class SaleRepository{
 
         $data = $sale;
 
-        $this->rPagare->generatePayment($dataRequest,$data,$commerce->id,"SALE");
+        $this->rPagare->generatePayment($dataRequest,$data,$commerce->id,"SALE",$request->enum_status);
+       
 
         return ["code" => "200", "message" =>"success", "data" => $sale];
 
@@ -76,7 +78,8 @@ class SaleRepository{
             "client_id" => $request->client_id,
             "employe_id" => $request->employe_id,
             "description" => $request->description,
-            "total_cost" => $request->total_cost
+            "total_cost" => $request->total_cost,
+            "enum_status" => $request->enum_status
         ]);
         
         $sale->products()->detach();
@@ -99,18 +102,39 @@ class SaleRepository{
         
         $data = $request->all();
         
-        $this->rPagare->updatePayment($data,$payment);
+        $this->rPagare->updatePayment($data,$payment,$request->enum_status);
+
 
         return ["code" => "200", "message" =>"success", "data" => $sale];  
     }
 
-    public function destroySale(Sale $sale){
+    public function destroySale( Sale $sale){
         
-        $sale->products()->detach();
+        $payments = $sale->payments()->get();
+        
+        foreach($payments as $payment){          
+
+            $entrys = $payment->entrys()->get();
+            
+
+            foreach($entrys as $entry){
+                $entry->delete();
+            }
+
+            $egress= $payment->egress()->get();
+
+            foreach($egress as $egres){
+                $egres->delete();
+            }
+
+            $payment->delete();
+        }
 
         $sale->delete();
-
+            
         return ["code" => "200", "meesage" => "Eliminado"];
+
+       
     }
 
 }

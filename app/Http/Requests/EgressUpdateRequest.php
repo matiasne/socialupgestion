@@ -25,6 +25,8 @@ class EgressUpdateRequest extends FormRequest
     {
         return [
             'total' => 'required|integer',
+            'payment_id' => 'required|integer',
+            
         ];
     }
 
@@ -32,6 +34,7 @@ class EgressUpdateRequest extends FormRequest
     {
         return [
             'total.required' => 'total is required!',
+            'payment_id.required' => 'payment_id is required for update!'
         ];
     }
 }

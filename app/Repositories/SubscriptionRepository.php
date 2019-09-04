@@ -50,8 +50,9 @@ class SubscriptionRepository{
 
         $datarequest= $request->all();
 
-        if($request->enum_start_payment == "ANTICIPADO")
-            $this->pagare->generatePayment($datarequest, $subs, $commerce->id,"SUBSCRIPTION");
+        if($request->enum_start_payment == "ANTICIPADO"){
+            $this->pagare->generatePayment($datarequest, $subs, $commerce->id,"SUBSCRIPTION","PAGADO");
+        }      
 
 
         return ["code" => "200", "message" =>"success", "data" => $subs];
@@ -84,10 +85,30 @@ class SubscriptionRepository{
 
     public function destroySubscription(Subscription $subscription){
         
+        $payments = $subscription->payments()->get();
+        
+        foreach($payments as $payment){          
+
+            $entrys = $payment->entrys()->get();
+            
+
+            foreach($entrys as $entry){
+                $entry->delete();
+            }
+
+            $egress= $payment->egress()->get();
+
+            foreach($egress as $egres){
+                $egres->delete();
+            }
+
+            $payment->delete();
+        }
+
         $subscription->services()->detach();
         
         $subscription->delete();
-        
+            
         return ["code" => "200", "meesage" => "Eliminado"];
     }
 

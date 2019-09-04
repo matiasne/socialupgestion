@@ -68,7 +68,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Commerce $commerce, Payment $payment)
     {
-        return $this->rPaym->updatePayment($request,$payment);
+        //return $this->rPaym->updatePayment($request,$payment);
 
         //$payment->child_table, $request->status,$payment->enum_type,$request->detalle,$request->caja
     }

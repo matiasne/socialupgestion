@@ -41,4 +41,8 @@ class Subscription extends Model
             return $this->belongsToMany('App\Service');
 
         }
+
+        public function payments(){
+            return Payment::where('child_table',$this->id)->where('enum_type','SUBSCRIPTION');
+        }
 }
