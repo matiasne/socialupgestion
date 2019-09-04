@@ -35,9 +35,10 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('users','UserController');
     Route::apiResource('rols','RolController');
 
+    Route::apiResource('commerces','Commerce\CommerceController');
+
     Route::group(['middleware' => 'belongs'], function() {
 
-        Route::apiResource('commerces','Commerce\CommerceController');
         Route::apiResource('commerces.clients','Commerce\ClientController');   
         Route::apiResource('commerces.products','Commerce\ProductController'); 
         Route::apiResource('commerces.services','Commerce\ServiceController');
@@ -47,8 +48,10 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::apiResource('commerces.sales','Commerce\SaleController');
         Route::apiResource('commerces.subscriptions','Commerce\SubscriptionController');
         Route::apiResource('commerces.payments','Commerce\PaymentController');
-        Route::apiResource('commerces.cajas','Commerce\CajaController');
+        Route::apiResource('commerces.cajas','Commerce\CajaController');     
 
     });
-    Route::apiResource('cajas.close','Commerce\ClosingController');
+    Route::group(['middleware' => 'idBelongs'], function() {
+        Route::get('commerces/{commerce_id}/cajas/{caja_id}/close','Commerce\CajaController@cerrar');
+    });
 });

@@ -40,10 +40,11 @@ class CajaRepository{
     }
 
 
-    public function Closing(Caja $caja, $extracted){
+    public function Closing($caja_id, $extracted){
         
+        $caja = Caja::findOrFail($caja_id);
         
-        $close_date = Closing::where('caja_id', $caja->id)
+        $close_date = Closing::where('caja_id', $caja_id)
                             ->orderBy('created_at','desc')
                             ->first();
                             //->value('created_at');
@@ -82,7 +83,7 @@ class CajaRepository{
                 "date_closing" => $date->format('Y-m-d H:m:s')
             ]);
     
-            return $caja;
+            return $close;
         }else{
             return ["code" => "403", "message" =>"Cantidad a extraer es mayor a la que existe en la caja"];
         }
