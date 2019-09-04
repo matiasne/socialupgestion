@@ -31,4 +31,8 @@ class Sale extends Model
     public function productsDetails(){
         return $this->hasMany("App\SalesProductsDetail");
     }
+
+    public function servicesDetails(){
+        return $this->hasMany("App\SalesServicesDetail");
+    }
 }

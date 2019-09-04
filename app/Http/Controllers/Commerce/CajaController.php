@@ -92,6 +92,8 @@ class CajaController extends Controller
     public function destroy(Commerce $commerce ,Caja $caja)
     {
         $caja->delete();
+
+        //!!!! Aca borrar todos los ingresos e egresos de caja
         
         return ["code" => "200", "meesage" => "Eliminado"];
     }

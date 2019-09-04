@@ -96,6 +96,18 @@ class SaleRepository{
             
         }
 
+        foreach ($request['services'] as $service){
+            
+            $serviceObj = json_decode ($service);
+
+            $sale->servicesDetails()->create([
+                "service_id" => $service->id,
+                "service_amount" => $service->amount,
+                "service_price" => $service->price
+            ]);
+            
+        }
+
         $sale->save();
 
         $payment = Payment::where('child_table',$sale->id)->where('enum_type','SALE')->first();  
@@ -129,6 +141,9 @@ class SaleRepository{
 
             $payment->delete();
         }
+
+        //!!!!!Acá eliminar todos los detail products
+        //!!!! Acá eliminar todos los detail services
 
         $sale->delete();
             
