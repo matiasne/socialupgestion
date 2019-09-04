@@ -17,7 +17,7 @@ class CreateClosingsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('caja_id');
             $table->foreign('caja_id')->references('id')->on('cajas');
-            $table->date('date_closing');
+            $table->dateTime('date_closing');
             $table->timestamps();
         });
     }
