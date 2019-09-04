@@ -21,18 +21,12 @@ class PaymentRepository{
         $this->caja = $caja;
     }
 
-    public function generatePayment($request, $data,$commerce_id,$enum_type){
+    public function generatePayment($request, $data,$commerce_id,$enum_type,$status_payment){
         
-
-        if($enum_type == "SALE"){
-            $status = $request['enum_status'];
-        }else{
-            $status = "PAGADO";
-        }
         $payment = Payment::create([
             "child_table" => $data->id,
             "enum_type" => $enum_type,
-            "enum_status" => $status,
+            "enum_status" => $status_payment,
             "total_cost" => $data->total_cost,
             "client_id" => $data->client_id,
             "commerce_id" => $commerce_id,
@@ -49,30 +43,30 @@ class PaymentRepository{
 
 
 
-    public function updatePayment($data, Payment $payment){
+    public function updatePayment($data, Payment $payment, $status){
 
     
-        if($data['enum_status'] =="PAGADO" && $payment->enum_status == "PENDIENTE"){
+        if($status =="PAGADO" && $payment->enum_status == "PENDIENTE"){
 
             $this->caja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         }
 
-        if( $data['enum_status'] == "PAGADO" && $payment->enum_status == "CANCELADO"){
+        if( $status == "PAGADO" && $payment->enum_status == "CANCELADO"){
             
             $this->caja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         } 
 
-        if($data['enum_status'] == "PENDIENTE" && $payment->enum_status == "PAGADO"){
+        if($status == "PENDIENTE" && $payment->enum_status == "PAGADO"){
 
             $this->caja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         }
 
-        if($data['enum_status'] == "CANCELADO" && $payment->enum_status == "PAGADO"){
+        if($status == "CANCELADO" && $payment->enum_status == "PAGADO"){
             
             $this->caja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         }
 
-        $payment->enum_status =  $data['enum_status'];
+        $payment->enum_status =  $status;
         $payment->save();
 
         return ["code" => "200", "message" =>"success", "data" => $payment];

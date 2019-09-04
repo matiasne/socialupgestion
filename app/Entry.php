@@ -19,6 +19,6 @@ class Entry extends Model
     }
 
     public function payments(){
-        return $this->hasMany('App\Payment');
+        return $this->belongsTo('App\Payment');
     }
 }

@@ -24,14 +24,16 @@ class ClosingStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'total' => 'required|integer',
+            'caja_id' => 'required|integer',
+            'date_closing' => 'required|date',
         ];
     }
 
     public function messages()
     {
         return [
-            'total.required' => 'total is required!',
+            'caja_id.required' => 'caja_id is required!',
+            'date_closing.required' => 'date_closing is required!',
         ];
     }
 }

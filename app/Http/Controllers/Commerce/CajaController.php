@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Commerce;
+
+
 use App\Http\Controllers\Controller;
 
 use App\Caja;
 use App\Commerce;
+
 
 use Illuminate\Http\Request;
 
@@ -47,6 +50,7 @@ class CajaController extends Controller
     public function show(Commerce $commerce,Caja $caja)
     {
         return $caja;
+
     }
 
     /**
@@ -67,7 +71,6 @@ class CajaController extends Controller
         $caja->save();
 
         return ["code" => "200", "message" =>"success", "data" => $caja];
-
     }
 
     /**

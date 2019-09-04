@@ -8,6 +8,7 @@ class Egress extends Model
 {   
     protected $fillable = [
         'caja_id',
+        'payment_id',
         'total',
         'description'
     ];
@@ -15,5 +16,9 @@ class Egress extends Model
     public function cajas()
     {
         return $this->belongsTo('App\Caja');
+    }
+    
+    public function payments(){
+        return $this->belongsTo('App\Payment');
     }
 }

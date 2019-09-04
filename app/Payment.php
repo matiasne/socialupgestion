@@ -18,11 +18,18 @@ class Payment extends Model
 
     public function entrys()
     {
-        return $this->belongsTo('App\Entry');
+        return $this->hasMany('App\Entry');
+    }
+
+    public function egress()
+    {
+        return $this->hasMany('App\Egress');
     }
 
     public function commerces()
     {
         return $this->belongsTo('App\Commmerce');
     }
+
+
 }

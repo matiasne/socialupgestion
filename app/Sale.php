@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Payment;
 use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
@@ -13,7 +13,7 @@ class Sale extends Model
         'creation_date',
         'description',
         'total_cost',
-        'enum_estatus'
+        'enum_status',
     ];
 
     public function products(){
@@ -22,6 +22,10 @@ class Sale extends Model
 
     public function commerce(){
         return $this->belongsTo("App\Commerce");
+    }
+
+    public function payments(){
+        return Payment::where('child_table',$this->id)->where('enum_type','SALE');
     }
 
     
