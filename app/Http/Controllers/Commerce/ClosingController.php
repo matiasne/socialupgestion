@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
+use App\Repositories\CajaRepository;
 
 use App\Closing;
+use App\Caja;
+
 use Illuminate\Http\Request;
 
 class ClosingController extends Controller
 {
+    protected $rPcaja;
+
+    public function __construct(CajaRepository $caja)
+    {
+        $this->rPcaja = $caja;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,9 +43,9 @@ class ClosingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Caja $caja)
     {
-        //
+        return $this->rPcaja->Closing($caja,$request->extracted);
     }
 
     /**
@@ -48,6 +57,7 @@ class ClosingController extends Controller
     public function show(Closing $closing)
     {
         //
+        return $closing;
     }
 
     /**
