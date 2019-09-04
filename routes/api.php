@@ -34,15 +34,20 @@ Route::group(['middleware' => 'auth:api'], function() {
         
     Route::apiResource('users','UserController');
     Route::apiResource('rols','RolController');
-    Route::apiResource('commerces','Commerce\CommerceController');
-    Route::apiResource('commerces.clients','Commerce\ClientController');   
-    Route::apiResource('commerces.products','Commerce\ProductController'); 
-    Route::apiResource('commerces.services','Commerce\ServiceController');
-    Route::apiResource('commerces.categories','Commerce\CategoryController');    
-    Route::apiResource('commerces.providers','Commerce\ProviderController'); 
-    Route::apiResource('commerces.employes','Commerce\EmployeController');
-    Route::apiResource('commerces.sales','Commerce\SaleController');
-    Route::apiResource('commerces.subscriptions','Commerce\SubscriptionController');
-    Route::apiResource('commerces.payments','Commerce\PaymentController');
-    Route::apiResource('commerces.cajas','Commerce\CajaController');
+
+    Route::group(['middleware' => 'belongs'], function() {
+
+        Route::apiResource('commerces','Commerce\CommerceController');
+        Route::apiResource('commerces.clients','Commerce\ClientController');   
+        Route::apiResource('commerces.products','Commerce\ProductController'); 
+        Route::apiResource('commerces.services','Commerce\ServiceController');
+        Route::apiResource('commerces.categories','Commerce\CategoryController');    
+        Route::apiResource('commerces.providers','Commerce\ProviderController'); 
+        Route::apiResource('commerces.employes','Commerce\EmployeController');
+        Route::apiResource('commerces.sales','Commerce\SaleController');
+        Route::apiResource('commerces.subscriptions','Commerce\SubscriptionController');
+        Route::apiResource('commerces.payments','Commerce\PaymentController');
+        Route::apiResource('commerces.cajas','Commerce\CajaController');
+
+    });
 });

@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 
 class EntryController extends Controller
 {   
-    protected $;
+    
 
     public function __construct(ImgRepository $img)
     {
-        $this-> = $img;
+        
     }
 
 
