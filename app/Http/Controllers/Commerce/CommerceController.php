@@ -98,6 +98,17 @@ class CommerceController extends Controller
     public function destroy(Commerce $commerce)
     {
         //
+        $commerce->products()->delete();
+        $commerce->users()->detach();
+        $commerce->clients()->delete();
+        $commerce->categories()->delete();
+        $commerce->providers()->delete();
+        $commerce->sales()->delete();
+        $commerce->subscription()->delete();
+        $commerce->services()->delete();
+        $commerce->cajas()->delete();
+        $commerce->payments()->delete();
+
         $commerce->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

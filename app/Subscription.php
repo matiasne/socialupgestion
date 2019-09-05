@@ -20,23 +20,15 @@ class Subscription extends Model
         ];
 
         public function commerce(){
-
-            return $this->belongsTo('App\Commerce');
-    
+            return $this->belongsTo('App\Commerce');    
         }       
 
-        public function clients(){
-    
-            return $this->belongsTo('App\Client');
-            
-        }
-
-       
+        public function clients(){    
+            return $this->belongsTo('App\Client');            
+        }      
 
         public function services(){
-
             return $this->belongsToMany('App\Service');
-
         }
 
         public function payments(){
