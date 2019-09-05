@@ -20,7 +20,7 @@ class CajaController extends Controller
     {
         $this->rCaja = $rcaja;
 
-        $this->middleware('isAdmin', ['only' => ['store','update','destroy']]); 
+        $this->middleware('isAdmin', ['only' => ['store','update','destroy','cerrar']]); 
     }
 
     /**

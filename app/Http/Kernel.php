@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'belongs' => \App\Http\Middleware\CheckBelong::class,
         'idBelongs' => \App\Http\Middleware\CheckIdBelong::class,
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
-        'IsEmployee' => \App\Http\Middleware\IsEmployee::class,
+        
     ];
 
     /**
