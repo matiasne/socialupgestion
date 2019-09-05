@@ -16,6 +16,7 @@ class CommerceController extends Controller
     public function __construct(ImgRepository $img)
     {
         $this->img = $img;
+        $this->middleware('isAdmin', ['only' => ['update','destroy']]); 
     }
 
     /**

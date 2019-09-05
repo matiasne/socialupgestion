@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+
+    public function __construct()    {
+        
+        $this->middleware('isAdmin', ['only' => ['store','update','destroy']]); 
+    }
+
    
     public function index(Commerce $commerce)
     {     

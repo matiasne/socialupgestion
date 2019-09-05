@@ -9,6 +9,11 @@ use App\Http\Requests\ProviderStoreRequest;
 
 class ProviderController extends Controller
 {
+
+    public function __construct()    {
+        
+        $this->middleware('isAdmin', ['only' => ['update','destroy']]); 
+    }
     /**
      * Display a listing of the resource.
      *

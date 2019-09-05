@@ -18,6 +18,7 @@ class SubscriptionController extends Controller
     public function __construct(SubscriptionRepository $rsub)
     {
         $this->rSubscription = $rsub;
+        $this->middleware('isAdmin', ['only' => ['update','destroy']]); 
     }
 
     /**

@@ -10,6 +10,11 @@ use App\Http\Requests\EmployeUpdateRequest;
 
 class EmployeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isAdmin', ['only' => ['store','destroy']]);     
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +35,7 @@ class EmployeController extends Controller
      */
     public function store(EmployeStoreRequest $request, Commerce $commerce)
     {   
+        //Verificar si el empleado existe!!!!!!
         $commerce->users()->attach($request->employee_id, ['rol' => "EMPLOYEE"] );
     }
 

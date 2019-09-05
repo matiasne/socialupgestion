@@ -19,6 +19,8 @@ class CajaController extends Controller
     public function __construct(CajaRepository $rcaja)
     {
         $this->rCaja = $rcaja;
+
+        $this->middleware('isAdmin', ['only' => ['store','update','destroy']]); 
     }
 
     /**

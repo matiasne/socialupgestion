@@ -19,6 +19,8 @@ class SaleController extends Controller
     public function __construct(SaleRepository $rSale)
     {
         $this->rSale = $rSale;
+        $this->middleware('isAdmin', ['only' => ['update','destroy']]); 
+        
     }
     /**
      * Display a listing of the resource.
