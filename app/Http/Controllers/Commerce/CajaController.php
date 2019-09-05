@@ -14,11 +14,11 @@ use Illuminate\Http\Request;
 class CajaController extends Controller
 {
 
-    protected $rPcaja;
+    protected $rCaja;
 
     public function __construct(CajaRepository $rcaja)
     {
-        $this->rPcaja = $rcaja;
+        $this->rCaja = $rcaja;
     }
 
     /**
@@ -39,16 +39,9 @@ class CajaController extends Controller
      */
     public function store(Request $request, Commerce $commerce)
     {
+        $result = $this->rCaja->store($request->name,$request->total,$commerce->id);
 
-
-
-        $caja = Caja::create([
-            "name" => $request->name,
-            "commerce_id" =>  $commerce->id,
-            "total" => $request->total
-        ]);
-
-        return ["code" => "200", "message" =>"success", "data" => $caja];
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 
     /**
@@ -60,7 +53,6 @@ class CajaController extends Controller
     public function show(Commerce $commerce,Caja $caja)
     {
         return $caja;
-
     }
 
     /**
@@ -72,15 +64,9 @@ class CajaController extends Controller
      */
     public function update(Request $request, Commerce $commerce,Caja $caja)
     {
-        $caja->update([
-            "name" => $request->name,
-            "commerce_id" =>  $commerce->id,
-            "total" => $request->total
-        ]);
+        $result = $this->rCaja->update($caja);
 
-        $caja->save();
-
-        return ["code" => "200", "message" =>"success", "data" => $caja];
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 
     /**
@@ -91,15 +77,15 @@ class CajaController extends Controller
      */
     public function destroy(Commerce $commerce ,Caja $caja)
     {
-        $caja->delete();
+        $result = $this->rCaja->destroy($caja);
 
-        //!!!! Aca borrar todos los ingresos e egresos de caja
-        
-        return ["code" => "200", "meesage" => "Eliminado"];
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
     
     public function cerrar(Request $request,$commerce_id, $caja_id){
 
-        return $this->rPcaja->Closing($caja_id,$request->extracted);
+        $result =  $this->rCaja->Closing($caja_id,$request->extracted);
+
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 }

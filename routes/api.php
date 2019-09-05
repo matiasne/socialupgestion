@@ -32,25 +32,29 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth:api'], function() {
         
-    Route::apiResource('users','UserController');
-    Route::apiResource('rols','RolController');
-
+    Route::apiResource('users','UserController');    
     Route::apiResource('commerces','Commerce\CommerceController');
 
     Route::group(['middleware' => 'belongs'], function() {
 
-        Route::apiResource('commerces.clients','Commerce\ClientController');   
-        Route::apiResource('commerces.products','Commerce\ProductController'); 
-        Route::apiResource('commerces.services','Commerce\ServiceController');
-        Route::apiResource('commerces.categories','Commerce\CategoryController');    
-        Route::apiResource('commerces.providers','Commerce\ProviderController'); 
-        Route::apiResource('commerces.employes','Commerce\EmployeController');
         Route::apiResource('commerces.sales','Commerce\SaleController');
         Route::apiResource('commerces.subscriptions','Commerce\SubscriptionController');
-        Route::apiResource('commerces.payments','Commerce\PaymentController');
-        Route::apiResource('commerces.cajas','Commerce\CajaController');     
+        
+        //Esto podría hacer el dueño
+        Route::apiResource('commerces.clients','Commerce\ClientController')->middleware('isAdmin');   
+        Route::apiResource('commerces.products','Commerce\ProductController')->middleware('isAdmin'); 
+        Route::apiResource('commerces.services','Commerce\ServiceController')->middleware('isAdmin');
+        Route::apiResource('commerces.categories','Commerce\CategoryController')->middleware('isAdmin');    
+        Route::apiResource('commerces.providers','Commerce\ProviderController')->middleware('isAdmin'); 
+        Route::apiResource('commerces.employes','Commerce\EmployeController')->middleware('isAdmin');       
+        Route::apiResource('commerces.payments','Commerce\PaymentController')->middleware('isAdmin');
+        Route::apiResource('commerces.cajas','Commerce\CajaController')->middleware('isAdmin');     
+
+        //Esto podria hacer el empleado
+        
 
     });
+    
     Route::group(['middleware' => 'idBelongs'], function() {
         Route::get('commerces/{commerce_id}/cajas/{caja_id}/close','Commerce\CajaController@cerrar');
     });

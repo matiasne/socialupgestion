@@ -26,7 +26,8 @@ class SubscriptionUpdateRequest extends FormRequest
         return [
             'period'=> 'required|integer',
             'enum_status' => 'required|string',
-            'total_cost' => 'required|integer'
+            'total_cost' => 'required|integer',
+            'enum_pay_with' => 'required|string',
         ];
     }
 
@@ -35,7 +36,8 @@ class SubscriptionUpdateRequest extends FormRequest
         return [
             'period.required' => 'period is required for update!',
             'enum_status.required' => 'enum_status is required for update!',
-            'total_cost.required' => 'total_cost is required for update!'
+            'total_cost.required' => 'total_cost is required for update!',
+            'enum_pay_with' => 'enum_pay_with is required!'
         ];
     }
 }

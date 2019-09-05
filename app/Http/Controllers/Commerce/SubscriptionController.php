@@ -13,11 +13,11 @@ use App\Http\Requests\SubscriptionUpdateRequest;
 class SubscriptionController extends Controller
 {   
 
-    protected $Subsrepo;
+    protected $rSubscription;
 
-    public function __construct(SubscriptionRepository $sub)
+    public function __construct(SubscriptionRepository $rsub)
     {
-        $this->Subsrepo = $sub;
+        $this->rSubscription = $rsub;
     }
 
     /**
@@ -27,7 +27,7 @@ class SubscriptionController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        return $this->Subsrepo->getall($commerce);
+        return $this->rSubscription->getall($commerce);
     }    
 
     /**
@@ -38,10 +38,12 @@ class SubscriptionController extends Controller
      */
     public function store(SubscriptionStoreRequest $request, Commerce $commerce)
     {   
+        
         $data = $request->validated();
 
-        return $this->Subsrepo->storeSubscription($request,$commerce);
+        $result = $this->rSubscription->storeSubscription($request,$commerce);
 
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 
     /**
@@ -52,7 +54,7 @@ class SubscriptionController extends Controller
      */
     public function show(Commerce $commerce, Subscription $subscription)
     {
-        return $this->Subsrepo->getone($subscription);
+        return $this->rSubscription->getone($subscription);
     }
 
    
@@ -67,7 +69,9 @@ class SubscriptionController extends Controller
     {
         $data = $request->validated();
 
-        return $this->Subsrepo->updateSubscription($request,$commerce,$subscription);
+        $result = $this->rSubscription->updateSubscription($request,$commerce,$subscription);
+
+        return ["code" => "200", "message" =>"success", "data" => $result];
 
     }
 
@@ -79,6 +83,8 @@ class SubscriptionController extends Controller
      */
     public function destroy(Commerce $commerce,Subscription $subscription)
     {
-        return $this->Subsrepo->destroySubscription($subscription);
+        $result =  $this->rSubscription->destroySubscription($subscription);
+
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 }

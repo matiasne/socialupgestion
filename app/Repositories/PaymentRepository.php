@@ -14,17 +14,17 @@ use Illuminate\Http\Request;
 
 class PaymentRepository{
 
-    protected $caja;
+    protected $rCaja;
 
-    public function __construct(CajaRepository $caja)
+    public function __construct(CajaRepository $rCaja)
     {
-        $this->caja = $caja;
+        $this->rCaja = $rCaja;
     }
 
     public function generatePayment($request, $data,$commerce_id,$enum_type,$status_payment){
         
         $payment = Payment::create([
-            "child_table" => $data->id,
+            "child_table_id" => $data->id,
             "enum_type" => $enum_type,
             "enum_status" => $status_payment,
             "total_cost" => $data->total_cost,
@@ -35,10 +35,18 @@ class PaymentRepository{
         $payment->save();
         
         if($payment->enum_status == "PAGADO"){
-            $this->caja->generateEntry($payment->id,$payment->total_cost,$commerce_id,$request['description'],$request['caja']);
+            
+            $this->rCaja->generateEntry(
+                $payment->id,
+                $payment->total_cost,
+                $commerce_id,
+                $request['description'],
+                $request['caja_id'],
+                $request['enum_pay_with']
+            );
         }
 
-        return ["code" => "200", "message" =>"success", "data" => $payment];
+        return $payment;
     }
 
 
@@ -48,28 +56,28 @@ class PaymentRepository{
     
         if($status =="PAGADO" && $payment->enum_status == "PENDIENTE"){
 
-            $this->caja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
+            $this->rCaja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja'],$enum_pay_with);
         }
 
         if( $status == "PAGADO" && $payment->enum_status == "CANCELADO"){
             
-            $this->caja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
+            $this->rCaja->generateEntry($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja'],$enum_pay_with);
         } 
 
         if($status == "PENDIENTE" && $payment->enum_status == "PAGADO"){
 
-            $this->caja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
+            $this->rCaja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         }
 
         if($status == "CANCELADO" && $payment->enum_status == "PAGADO"){
             
-            $this->caja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
+            $this->rCaja->generateEgress($payment->id,$payment->total_cost,$payment->commerce_id,$data['detalle'],$data['caja']);
         }
 
         $payment->enum_status =  $status;
         $payment->save();
 
-        return ["code" => "200", "message" =>"success", "data" => $payment];
+        return $payment;
     }
 
 }

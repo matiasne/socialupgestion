@@ -24,9 +24,7 @@ class EmployeStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
-            'surname' => 'required|string|max:100',
-            'position' => 'required|string|max:100'
+            'employee_id' => 'required|integer',
         ];
     }
 
@@ -34,10 +32,7 @@ class EmployeStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'name is required!',
-           /*'commerce_id.required' => 'commerce_id is required!',*/
-            'surname.required' => 'surname is required!',
-            'position.required' => 'position is required!'
+            'employee_id.required' => 'employee_id is required!',
         ];
     }
 }

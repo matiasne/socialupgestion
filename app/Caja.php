@@ -17,11 +17,11 @@ class Caja extends Model
         return $this->belongsTo('App\Commerce');
     }
 
-    public function egress()
+    public function egresses()
     {
         return $this->hasMany('App\Egress');
     }
-    public function entry()
+    public function entries()
     {
         return $this->hasMany('App\Entry');
     }

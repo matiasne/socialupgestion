@@ -23,12 +23,17 @@ class Commerce extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User')->withPivot('rol');
     }
 
-    public function employes(){
-        return $this->hasMany("App\Employe");
+    public function employees() {
+        return $this->users()->wherePivot('rol', 'EMPLOYEE');
     }
+
+    public function admins() {
+        return $this->users()->wherePivot('rol', 'ADMIN');
+    }
+
 
     public function clients(){
         return $this->hasMany("App\Client");        

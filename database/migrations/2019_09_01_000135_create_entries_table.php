@@ -19,6 +19,7 @@ class CreateEntriesTable extends Migration
             $table->foreign('payment_id')->references('id')->on('payments')->nullable();
             $table->integer('caja_id');
             $table->foreign('caja_id')->references('id')->on('cajas');
+            $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH']); 
             $table->string('description');
             $table->integer('total');
             $table->timestamps();

@@ -41,12 +41,15 @@ class CommerceController extends Controller
     {
         $data = $request->validated();
 
-        $commerce = $request->user('api')->commerces()->create([
+        $commerce = Commerce::create([
             "name" => $request->name,
             "address" => $request->address,
             "phone_number" => $request->phone_number,
-            "imgcommerce"  => $this->img->imgCommerce($request)
-        ]);          
+            "imgcommerce"  => $this->img->imgCommerce($request),
+            
+        ]);
+
+        $request->user('api')->commerces()->attach($commerce->id, ['rol' => "ADMIN"]);
 
         return ["code" => "200", "message" =>"success", "data" => $commerce];
     }
@@ -97,4 +100,6 @@ class CommerceController extends Controller
         $commerce->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }
+
+    
 }

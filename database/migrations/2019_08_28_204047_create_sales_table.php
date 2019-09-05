@@ -24,6 +24,7 @@ class CreateSalesTable extends Migration
             $table->date('creation_date');
             $table->string('description');
             $table->enum('enum_status',['PAGADO','PENDIENTE','CANCELADO']);
+            $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH']);
             $table->integer('total_cost');
             $table->timestamps();
         });

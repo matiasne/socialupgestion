@@ -37,19 +37,30 @@ class SaleRepository{
             "creation_date" => $request->creation_date,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
-            "enum_status_sale" => $request->enum_status,            
+            "enum_status" => $request->enum_status, 
+            "enum_pay_with" =>$request->enum_pay_with           
         ]);
 
         foreach ($request['products'] as $product){
 
-            $productObj = json_decode ($product);
-
-            
+            $productObj = json_decode ($product);          
 
             $sale->productsDetails()->create([
                 "product_id" => $productObj->id,
                 "product_amount" => $productObj->amount,
                 "product_price" => $productObj->price
+            ]);
+           
+        }
+
+        foreach ($request['services'] as $service){
+
+            $serviceObj = json_decode ($service);          
+
+            $sale->servicesDetails()->create([
+                "service_id" => $serviceObj->id,
+                "service_amount" => $serviceObj->amount,
+                "service_price" => $serviceObj->price
             ]);
            
         }
@@ -60,10 +71,16 @@ class SaleRepository{
 
         $data = $sale;
 
-        $this->rPagare->generatePayment($dataRequest,$data,$commerce->id,"SALE",$request->enum_status);
+        $this->rPagare->generatePayment(
+            $dataRequest,
+            $data,
+            $commerce->id,
+            "SALE",
+            $request->enum_status
+        );
        
 
-        return ["code" => "200", "message" =>"success", "data" => $sale];
+        return $sale;
 
     }
 
@@ -79,7 +96,8 @@ class SaleRepository{
             "employe_id" => $request->employe_id,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
-            "enum_status" => $request->enum_status
+            "enum_status" => $request->enum_status,
+            "enum_pay_with" =>$request->enum_pay_with 
         ]);
         
         $sale->products()->detach();
@@ -110,14 +128,12 @@ class SaleRepository{
 
         $sale->save();
 
-        $payment = Payment::where('child_table',$sale->id)->where('enum_type','SALE')->first();  
-        
         $data = $request->all();
         
-        $this->rPagare->updatePayment($data,$payment,$request->enum_status);
+        $this->rPagare->updatePayment($data,$sale->payments()->first(),$request->enum_status);
 
 
-        return ["code" => "200", "message" =>"success", "data" => $sale];  
+        return $sale;  
     }
 
     public function destroySale( Sale $sale){
@@ -126,28 +142,27 @@ class SaleRepository{
         
         foreach($payments as $payment){          
 
-            $entrys = $payment->entrys()->get();
-            
+            $entries = $payment->entries()->get();            
 
-            foreach($entrys as $entry){
+            foreach($entries as $entry){
                 $entry->delete();
             }
 
-            $egress= $payment->egress()->get();
+            $egresses= $payment->egresses()->get();
 
-            foreach($egress as $egres){
-                $egres->delete();
+            foreach($egresses as $egress){
+                $egress->delete();
             }
 
             $payment->delete();
         }
 
-        //!!!!!Acá eliminar todos los detail products
-        //!!!! Acá eliminar todos los detail services
+        $sale->products()->detach();
+        $sale->services()->detach();
 
         $sale->delete();
             
-        return ["code" => "200", "meesage" => "Eliminado"];
+        return true;
 
        
     }

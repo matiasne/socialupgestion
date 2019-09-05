@@ -13,11 +13,11 @@ use App\Http\Requests\SubscriptionUpdateRequest;
 
 class SubscriptionRepository{
 
-    protected $pagare;
+    protected $rPagare;
 
-    public function __construct(PaymentRepository $pagare)
+    public function __construct(PaymentRepository $rPagare)
     {
-        $this->pagare = $pagare;
+        $this->rPagare = $rPagare;
     }
 
 
@@ -27,7 +27,7 @@ class SubscriptionRepository{
     }
 
     public function storeSubscription(SubscriptionStoreRequest $request , Commerce $commerce){
-        
+       
         $subs = Subscription::create([
             
             "commerce_id" =>  $commerce->id,  
@@ -38,7 +38,8 @@ class SubscriptionRepository{
             "total_cost" => $request->total_cost,
             "period" => $request->period,
             "start_date" => $request->start_date,
-            "enum_status" => $request->enum_status
+            "enum_status" => $request->enum_status,
+            "enum_pay_with" =>$request->enum_pay_with 
 
         ]); 
         
@@ -51,11 +52,17 @@ class SubscriptionRepository{
         $datarequest= $request->all();
 
         if($request->enum_start_payment == "ANTICIPADO"){
-            $this->pagare->generatePayment($datarequest, $subs, $commerce->id,"SUBSCRIPTION","PAGADO");
+            
+            $this->rPagare->generatePayment(
+                $datarequest, 
+                $subs, 
+                $commerce->id,
+                "SUBSCRIPTION",
+                "PAGADO"
+            );
         }      
-
-
-        return ["code" => "200", "message" =>"success", "data" => $subs];
+        
+        return $subs;
 
     }
 
@@ -70,7 +77,8 @@ class SubscriptionRepository{
             "description" => $request->description,
             "total_cost" => $request->total_cost,
             "period" => $request->period,
-            "enum_status" => $request->enum_status
+            "enum_status" => $request->enum_status,
+            "enum_pay_with" =>$request->enum_pay_with 
         ]);
 
         $subscription->services()->detach();
@@ -80,7 +88,7 @@ class SubscriptionRepository{
 
         $subscription->save();
         
-        return ["code" => "200", "message" => "Actualizado", "data" => $subscription];
+        return $subscription;
     }
 
     public function destroySubscription(Subscription $subscription){
@@ -89,17 +97,16 @@ class SubscriptionRepository{
         
         foreach($payments as $payment){          
 
-            $entrys = $payment->entrys()->get();
-            
+            $entries = $payment->entries()->get();           
 
-            foreach($entrys as $entry){
+            foreach($entries as $entry){
                 $entry->delete();
             }
 
-            $egress= $payment->egress()->get();
+            $egresses= $payment->egresses()->get();
 
-            foreach($egress as $egres){
-                $egres->delete();
+            foreach($egresses as $egress){
+                $egress->delete();
             }
 
             $payment->delete();
@@ -109,7 +116,7 @@ class SubscriptionRepository{
         
         $subscription->delete();
             
-        return ["code" => "200", "meesage" => "Eliminado"];
+        return true;
     }
 
 }

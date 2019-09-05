@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function commerces()
     {
-        return $this->belongsToMany('App\Commerce');
+        return $this->belongsToMany('App\Commerce')->withPivot('rol');
     }
 }

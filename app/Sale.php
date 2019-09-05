@@ -14,6 +14,7 @@ class Sale extends Model
         'description',
         'total_cost',
         'enum_status',
+        'enum_pay_with'
     ];
 
     protected $with = ['productsDetails'];
@@ -24,7 +25,7 @@ class Sale extends Model
     }
 
     public function payments(){
-        return Payment::where('child_table',$this->id)->where('enum_type','SALE');
+        return Payment::where('child_table_id',$this->id)->where('enum_type','SALE');
     }
 
     

@@ -9,26 +9,32 @@ use App\Closing;
 
 class CajaRepository{
 
-    public function generateEntry($payment,$total,$commerce,$description,$caja){
+    public function generateEntry($payment,$total,$commerce,$description,$caja,$enum_pay_with){
 
         $entry = Entry::create([
             "caja_id" => $caja,
             "total" => $total,
             "payment_id" =>$payment,
-            "description" => $description
-        ]);  
+            "description" => $description,
+            "enum_pay_with" => $enum_pay_with 
+        ]); 
+        
+        return $entry;
     }
 
     public function generateEgress($payment,$total,$commerce,$description,$caja){
+        
         $egress = Egress::create([
             "caja_id" => $caja,
             "total" => $total,
             "payment_id" =>$payment,
             "description" => $description
         ]);
+
+        return $egress;
     }
 
-    public function StoreCaja($name,$total,$commerce){
+    public function store($name,$total,$commerce){
 
         $caja = Caja::create([
             "name" => $name,
@@ -37,6 +43,49 @@ class CajaRepository{
         ]);
 
         $caja->save();
+
+        return $caja;
+    }
+
+    public function update($caja){
+
+        $caja->update([
+            "name" => $request->name,
+            "commerce_id" =>  $commerce->id,
+            "total" => $request->total
+        ]);
+
+        $caja->save();
+
+        return $caja;
+    }
+
+   
+
+    public function destroy($caja){
+
+        $entries = $caja->entries()->get();            
+
+        foreach($entries as $entry){
+            $entry->delete();
+        }
+
+        $egress= $caja->egress()->get();
+
+        foreach($egress as $egres){
+            $egres->delete();
+        }
+
+        $closings= $caja->closings()->get();
+
+        foreach($closings as $closing){
+            $closing->delete();
+        }
+
+        $caja->delete();
+
+        return true;
+
     }
 
 
@@ -52,10 +101,10 @@ class CajaRepository{
             $close_date = "00-00-00";
         }
 
-        $entrys= $caja->entry()->whereDate('created_at', '>', $close_date)->get('total');
+        $entries= $caja->entry()->whereDate('created_at', '>', $close_date)->get('total');
         $total_entry=0;
 
-        foreach( $entrys as $entry){          
+        foreach( $entries as $entry){          
             
             $total_entry += $entry->total;
         }
@@ -84,8 +133,10 @@ class CajaRepository{
             ]);
     
             return $close;
+
         }else{
-            return ["code" => "403", "message" =>"Cantidad a extraer es mayor a la que existe en la caja"];
+
+            return null;
         }
     }
   

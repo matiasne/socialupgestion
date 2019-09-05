@@ -14,11 +14,11 @@ use App\Http\Requests\SaleUpdateRequest;
 
 class SaleController extends Controller
 {
-    protected $salerepo;
+    protected $rSale;
 
-    public function __construct(SaleRepository $pagare)
+    public function __construct(SaleRepository $rSale)
     {
-        $this->salerepo = $pagare;
+        $this->rSale = $rSale;
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class SaleController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        return $this->salerepo->getall($commerce);
+        return $this->rSale->getall($commerce);
     }
 
 
@@ -41,7 +41,9 @@ class SaleController extends Controller
     {   
        $data = $request->validated();
       
-       return $this->salerepo->storeSale($request,$commerce);
+       $result = $this->rSale->storeSale($request,$commerce);
+
+       return ["code" => "200", "message" =>"success", "data" => $result];
     }
 
     /**
@@ -52,7 +54,7 @@ class SaleController extends Controller
      */
     public function show(Commerce $commerce,Sale $sale)
     {
-        return $this->salerepo->getone($sale);
+        return $this->rSale->getone($sale);
     }
 
 
@@ -68,7 +70,9 @@ class SaleController extends Controller
         
         $data = $request->validated();
         
-        return $this->salerepo->updateSale($request,$commerce,$sale);
+        $result =  $this->rSale->updateSale($request,$commerce,$sale);
+
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 
     /**
@@ -79,6 +83,8 @@ class SaleController extends Controller
      */
     public function destroy(Commerce $commerce,Sale $sale)
     {
-        return $this->salerepo->destroySale($sale);
+        $result =  $this->rSale->destroySale($sale);
+
+        return ["code" => "200", "message" =>"success", "data" => $result];
     }
 }

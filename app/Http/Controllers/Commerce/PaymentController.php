@@ -27,25 +27,7 @@ class PaymentController extends Controller
         $pay = $commerce->payments()->get();
 
         return $pay;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request,  Commerce $commerce)
-    {
-       
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    
+    }   
 
     /**
      * Display the specified resource.
@@ -59,28 +41,5 @@ class PaymentController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Commerce $commerce, Payment $payment)
-    {
-        //return $this->rPaym->updatePayment($request,$payment);
-
-        //$payment->child_table, $request->status,$payment->enum_type,$request->detalle,$request->caja
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Commerce $commerce, Payment $payment)
-    {
-
-    }
+   
 }

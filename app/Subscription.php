@@ -15,7 +15,8 @@ class Subscription extends Model
             'period',
             'enum_start_payment',
             'enum_status',
-            'total_cost'
+            'total_cost',
+            'enum_pay_with'
         ];
 
         public function commerce(){
@@ -30,11 +31,7 @@ class Subscription extends Model
             
         }
 
-        public function employes(){
-    
-            return $this->belongsTo('App\Employe');
-            
-        }     
+       
 
         public function services(){
 
@@ -43,6 +40,6 @@ class Subscription extends Model
         }
 
         public function payments(){
-            return Payment::where('child_table',$this->id)->where('enum_type','SUBSCRIPTION');
+            return Payment::where('child_table_id',$this->id)->where('enum_type','SUBSCRIPTION');
         }
 }
