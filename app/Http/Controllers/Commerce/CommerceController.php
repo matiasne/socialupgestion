@@ -47,6 +47,10 @@ class CommerceController extends Controller
             "address" => $request->address,
             "phone_number" => $request->phone_number,
             "imgcommerce"  => $this->img->imgCommerce($request),
+            "latitud" => $request->latitud,
+            "longitud" => $request->longitud,
+            "description" => $request->description,
+            "email" => $request->email,
             
         ]);
 
@@ -82,6 +86,11 @@ class CommerceController extends Controller
             "name" => $request->name,
             "address" => $request->address,
             "phone_number" => $request->phone_number,
+            "imgcommerce"  => $this->img->imgCommerce($request),
+            "latitud" => $request->latitud,
+            "longitud" => $request->longitud,
+            "description" => $request->description,
+            "email" => $request->email,
         ]);
         
         $commerce->save();

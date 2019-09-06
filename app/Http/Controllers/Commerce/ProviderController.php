@@ -21,8 +21,6 @@ class ProviderController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        //
-         //
         $providers = $commerce->providers()->get();
         return $providers;
     }
@@ -61,11 +59,8 @@ class ProviderController extends Controller
      */
     public function show(Commerce $commerce,Provider $provider)
     {
-        //
         return $provider;
-    }
-
-   
+    }  
 
     /**
      * Update the specified resource in storage.
