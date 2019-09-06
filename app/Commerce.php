@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Commerce extends Model
 {
     //
+
+    
     
     protected $fillable = [
         'name', 
         'address', 
+        'latitud',
+        'longitud',
+        'description',
+        'email',
         'phone_number',
         'imgcommerce',
     ];
