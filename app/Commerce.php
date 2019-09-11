@@ -22,6 +22,9 @@ class Commerce extends Model
     ];
 
 
+    protected $with = ['products','services','clients','employees','categories','providers','cajas'];
+
+
     public function products(){
 
         return $this->hasMany('App\Product');

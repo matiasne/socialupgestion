@@ -27,7 +27,15 @@ class CommerceController extends Controller
     public function index(Request $request)
     {
         
-        $commerces = $request->user('api')->commerces()->get();
+        $commerces = $request->user('api')->commerces()
+            ->without('products')
+            ->without('services')
+            ->without('clients')
+            ->without('employees')
+            ->without('categories')
+            ->without('providers')
+            ->without('cajas')
+            ->get();
         return $commerces;
     }
 
