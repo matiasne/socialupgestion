@@ -10,7 +10,7 @@ class Client extends Model
         'commerce_id',
         'name', 
         'address', 
-        'phone_nunmber',
+        'phone_number',
         'positive_credit',
         'email',
     ];

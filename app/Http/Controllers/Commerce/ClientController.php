@@ -33,7 +33,7 @@ class ClientController extends Controller
         $client = Client::create([
             "name" => $request->name,
             "address" => $request->address,
-            "phone_nunmber" => $request->phone_nunmber,
+            "phone_number" => $request->phone_number,
             "email" => $request->email,
             'positive_credit'=>$request->positive_credit,
             "commerce_id" => $commerce->id
@@ -68,7 +68,7 @@ class ClientController extends Controller
         $client->update([
             "name" => $request->name,
             "address" => $request->address,
-            "phone_nunmber" => $request->phone_nunmber,
+            "phone_number" => $request->phone_number,
             'positive_credit'=>$request->positive_credit,
             "email" => $request->email
         ]);
@@ -86,7 +86,7 @@ class ClientController extends Controller
      */
     public function destroy( $commerce_id, $client_id)
     {
-        $client = Client::findOrFail($client_id);
+        $client = Client::findOrFail($client_id)->first();
         $client->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

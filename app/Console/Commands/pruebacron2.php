@@ -21,7 +21,7 @@ class pruebacron2 extends Command
    
     public function handle()
     {
-        Clients::where('phone_nunmber',1111)->delete();
+        Clients::where('phone_number',1111)->delete();
         Long::info("user delete");
     }
 }
