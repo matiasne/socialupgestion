@@ -89,10 +89,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($commerce_id,$category_id)
+    public function destroy(Commerce $commerce,Category $category)
     {
-        //
-        $category = Category::findOrFail($category_id);
+        
         $category->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

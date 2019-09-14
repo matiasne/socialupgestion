@@ -90,10 +90,9 @@ class ProviderController extends Controller
      * @param  \App\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function destroy($commerce_id,$provider_id)
+    public function destroy(Commerce $commerce,Provider $provider)
     {
         //
-        $provider = Provider::findOrFail($provider_id);
         $provider->delete();
         return ["code" => "200", "meesage" => "Eliminado"];
     }

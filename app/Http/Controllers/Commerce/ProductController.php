@@ -107,7 +107,7 @@ class ProductController extends Controller
         return ["code" => "200", "message" => "Actualizado", "data" => $product];
     }
 
-    public function destroy(Commerce $commerce, Product $product_id)
+    public function destroy(Commerce $commerce, Product $product)
     {
         $product->delete();
 
