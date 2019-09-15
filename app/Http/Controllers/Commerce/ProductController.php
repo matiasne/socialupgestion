@@ -79,15 +79,13 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, Commerce $commerce, Product $product)
     {
-        /*$data = $request->validated();
-
-        */
+       /*
         $file = $request->url_img;
         
         // La imagen la subiremos a un directorio llamado 'uploads', el cual creamos manualmente en nuestro servidor
         $file->move('img', $file->getClientOriginalName());
 
-        $filename = $file->getClientOriginalName();
+        $filename = $file->getClientOriginalName();*/
 
     
         $product->update([
@@ -99,7 +97,7 @@ class ProductController extends Controller
             "commerce_id" => $commerce->id,// $user->commerce->id,  
             "provider_id" => $request->provider_id,
             "category_id" => $request->category_id,
-            "imgproduct" => 'http://localhost/socialupgestion/public/img/'.$filename
+            "imgproduct" => 'http://localhost/socialupgestion/public/img/'
         ]);
         
         $product->save();

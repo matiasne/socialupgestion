@@ -18,7 +18,7 @@ class Commerce extends Model
         'description',
         'email',
         'phone_number',
-        'imgcommerce',
+        'img',
     ];
 
 

@@ -18,9 +18,9 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->integer('commerce_id')->unsigned();
             $table->foreign('commerce_id')->references('id')->on('commerces');
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('price');
             $table->timestamps();
         });

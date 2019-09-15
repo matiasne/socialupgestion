@@ -30,9 +30,7 @@ class ServiceStoreRequest extends FormRequest
         return [
             //
             'name' => 'required|string|max:100',
-            'description' => 'required|string|max:500',
             'price' => 'required|integer',
-            'category_id' => 'required|integer'
         ];
     }
 
@@ -40,9 +38,7 @@ class ServiceStoreRequest extends FormRequest
     {
         return [
             'name.required' => 'name is required!',
-            'description.required' => 'description is required!',
             'price.required' => 'price is required!',
-            'category_id.required' => 'category_id is required!'
         ];
     }
 }

@@ -25,9 +25,7 @@ class ServiceUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'description' => 'required|string|max:500',
             'price' => 'required|integer',
-            'category_id' => 'required|integer'
         ];
     }
 
@@ -35,9 +33,7 @@ class ServiceUpdateRequest extends FormRequest
     {
         return [
             'name.required' => 'name is required for update!',
-            'description.required' => 'description is required for update!',
             'price.required' => 'price is required for update!',
-            'category_id.required' => 'category_id is required for update!'
         ];
     }
 }

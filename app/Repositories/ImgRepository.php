@@ -11,34 +11,40 @@ class ImgRepository{
 
     public function imgProduct( ProductStoreRequest $request){
         
-        $file = $request->imgproduct;
+       /* $file = $request->img;
     
-        $file->move('imgProducts', $file->getClientOriginalName());
+        $file->move('img', $file->getClientOriginalName());
 
         $filename = $file->getClientOriginalName();
 
-        return 'http://localhost/socialupgestion/public/imgProducts/'.$filename;
+        return 'http://localhost/socialupgestion/public/imgProducts/'.$filename;*/
+
+        return "prueba";
     }
 
     public function imgUser(Request $request){
        
-        $file = $request->imguser;
+        /*$file = $request->img;
     
-        $file->move('imgUsers', $file->getClientOriginalName());
+        $file->move('img', $file->getClientOriginalName());
 
         $filename = $file->getClientOriginalName();
 
-        return 'http://localhost/socialupgestion/public/imgUsers/'.$filename;
+        return 'http://localhost/socialupgestion/public/imgUsers/'.$filename;*/
+
+        return "prueba";
+
     }
 
     public function imgCommerce(CommerceStoreRequest $request){
        
-        $file = $request->imgcommerce;
+       /* $file = $request->img;
     
-        $file->move('imgCommerces', $file->getClientOriginalName());
+        $file->move('img', $file->getClientOriginalName());
 
         $filename = $file->getClientOriginalName();
 
-        return 'http://localhost/socialupgestion/public/imgCommerces/'.$filename;
+        return 'http://localhost/socialupgestion/public/imgCommerces/'.$filename;*/
+        return "prueba";
     }
 }

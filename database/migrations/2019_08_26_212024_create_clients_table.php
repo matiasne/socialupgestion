@@ -14,9 +14,9 @@ class CreateClientsTable extends Migration
             $table->integer('commerce_id');
             $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->string('name');
-            $table->string('address');
-            $table->string('phone_number');
-            $table->string('email');
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->integer('positive_credit')->unsigned();
             $table->timestamps();
         });

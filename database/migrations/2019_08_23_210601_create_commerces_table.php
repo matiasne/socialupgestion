@@ -16,13 +16,13 @@ class CreateCommercesTable extends Migration
         Schema::create('commerces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
-            $table->string('description');
-            $table->string('latitud');
-            $table->string('longitud');
-            $table->string('phone_number');
-            $table->string('email');
-            $table->string('imgcommerce');
+            $table->string('address')->nullable();
+            $table->string('description')->nullable();
+            $table->string('latitud')->nullable();
+            $table->string('longitud')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

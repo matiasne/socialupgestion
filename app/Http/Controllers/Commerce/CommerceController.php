@@ -11,11 +11,11 @@ use App\Http\Requests\CommerceUpdateRequest;
 
 class CommerceController extends Controller
 {   
-    protected $img;
+    protected $rimg;
 
-    public function __construct(ImgRepository $img)
+    public function __construct(ImgRepository $rimg)
     {
-        $this->img = $img;
+        $this->rimg = $rimg;
         $this->middleware('isAdmin', ['only' => ['update','destroy']]); 
     }
 
@@ -54,7 +54,7 @@ class CommerceController extends Controller
             "name" => $request->name,
             "address" => $request->address,
             "phone_number" => $request->phone_number,
-            "imgcommerce"  => $this->img->imgCommerce($request),
+            "img"  => $this->rimg->imgCommerce($request),
             "latitud" => $request->latitud,
             "longitud" => $request->longitud,
             "description" => $request->description,
@@ -90,15 +90,22 @@ class CommerceController extends Controller
     {
         $data = $request->validated();
 
+      /*  $file = $request->img;
+        
+        // La imagen la subiremos a un directorio llamado 'uploads', el cual creamos manualmente en nuestro servidor
+        $file->move('img', $file->getClientOriginalName());
+
+        $filename = $file->getClientOriginalName();*/
+
         $commerce->update([
             "name" => $request->name,
             "address" => $request->address,
             "phone_number" => $request->phone_number,
-            "imgcommerce"  => $this->img->imgCommerce($request),
             "latitud" => $request->latitud,
             "longitud" => $request->longitud,
             "description" => $request->description,
             "email" => $request->email,
+            "img" => 'http://localhost/socialupgestion/public/img/'
         ]);
         
         $commerce->save();
