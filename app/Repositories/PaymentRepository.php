@@ -38,29 +38,35 @@ class PaymentRepository{
             "client_id" => $client_id,
             "commerce_id" => $commerce_id,
         ]);
-
-
-        if($enum_type == "CTACORRIENTE"){
-
-            //Acá genera un agreso de la cuenta corriente del cliente
-
-          
-        }
         
         
-        if($payment->enum_status == "PAGADO"){   
+        if($payment->enum_status == "PAGADO"){  
+            
+                    
             
             foreach ($payment['entries'] as $entrie){                
 
                 $entrieObj = json_decode ($entrie);
 
-                $this->rPaydesk->generatePaydeskEntry(
-                    $entrieObj->paydesk_id,
-                    $entrieObj->id,
-                    $entrieObj->amount,
-                    $entrieObj->enum_pay_with,
-                    "Ingreso por pago"
-                );    
+                if($entrieObj->enum_pay_with == "CTACORRIENTE"){
+
+                    //Acá genera un agreso de la cuenta corriente del cliente
+        
+                  
+                }   
+
+
+                if($entrieObj->enum_pay_with != "DISCOUNT"){
+
+                   //Si es con descuento entonces no genera ingreso de caja
+                    $this->rPaydesk->generatePaydeskEntry(
+                        $entrieObj->paydesk_id,
+                        $entrieObj->id,
+                        $entrieObj->amount,
+                        $entrieObj->enum_pay_with,
+                        "Ingreso por pago"
+                    ); 
+                }   
             }                        
         }
         return $payment;
