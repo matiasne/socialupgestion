@@ -72,10 +72,8 @@ class SaleRepository{
             $sale->id,
             $payment,
             $request->enum_status
-        );           
+        );        
         
-        
-
         $sale->save();
 
         

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
+    
     protected $fillable = [
         'commerce_id',
         'client_id', 
@@ -17,6 +18,9 @@ class Payment extends Model
         'amount',
     ];
 
+    protected $with =['paydeskEntries'];
+    
+
     public function conceptoReferido(){
 
         if($this->enum_type == "SALE"){
@@ -25,15 +29,6 @@ class Payment extends Model
         if($this->enum_type == "SUBSCRIPTION"){
             return Subscription::findOrFail($this->child_table_id);
         }
-    }
-
-    public function paydesks(){
-        //Porque un pago se puede realizar en varias cajas
-    }
-
-    public function paydeskEgresses()
-    {
-        return $this->hasMany('App\PaydeskEgress');
     }
 
     public function paydeskEntries()

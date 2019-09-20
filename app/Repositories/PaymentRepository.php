@@ -61,9 +61,7 @@ class PaymentRepository{
                     $entrieObj->enum_pay_with,
                     "Ingreso por pago"
                 );    
-            }
-
-                        
+            }                        
         }
         return $payment;
     }
@@ -109,28 +107,11 @@ class PaymentRepository{
         } 
 
         if($oldpayment->enum_status == "PAGADO" &&   $payment->enum_status == "PENDIENTE" ){
-
-            $this->rPaydesk->generatePaydeskEgress(
-                $payment->paydesk_id,
-                $payment->id,
-                $payment->mount,
-                "Salida de PAGADO a PENDIENTE"
-            );
-            $payment->enum_status =  $status;
-            $payment->save();            
+            $payment->paydeskEntries()->delete();
         }
 
         if($oldpayment->enum_status == "PAGADO" && $payment->enum_status == "CANCELADO" ){
-            
-            $this->rPaydesk->generatePaydeskEgress(
-                $payment->paydesk_id,
-                $payment->id,
-                $payment->mount,
-                "Salida de PAGADO a PENDIENTE"
-            );
-            $payment->enum_status =  $status;
-            $payment->save();
-
+            $payment->paydeskEntries()->delete();
         }
 
         $oldpayment->update([
