@@ -19,9 +19,9 @@ class CreatePaydesksEntriesTable extends Migration
             $table->foreign('payment_id')->references('id')->on('payments')->nullable();
             $table->integer('paydesk_id');
             $table->foreign('paydesk_id')->references('id')->on('paydesks');
-            $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH']); 
+            $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH','CURRENTACOUNT','DISCOUNT']);
             $table->string('description');
-            $table->integer('total');
+            $table->integer('amount');
             $table->timestamps();
         });
     }

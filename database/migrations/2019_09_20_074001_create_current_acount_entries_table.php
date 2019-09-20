@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaydesksTable extends Migration
+class CreateCurrentAcountEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePaydesksTable extends Migration
      */
     public function up()
     {
-        Schema::create('paydesks', function (Blueprint $table) {
+        Schema::create('current_acount_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('commerce_id');
-            $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreatePaydesksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paydesks');
+        Schema::dropIfExists('current_acount_entries');
     }
 }

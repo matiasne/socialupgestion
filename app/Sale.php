@@ -18,6 +18,13 @@ class Sale extends Model
 
     protected $with = ['productsDetails'];
 
+    public function client(){
+        return $this->belongsTo("App\Client");
+    }
+
+    public function employee(){
+        return $this->belongsTo("App\Employe");
+    }
 
     public function commerce(){
         return $this->belongsTo("App\Commerce");
@@ -26,8 +33,7 @@ class Sale extends Model
     public function payments(){
         return Payment::where('child_table_id',$this->id)->where('enum_type','SALE');
     }
-
-    
+        
     public function productsDetails(){
         return $this->hasMany("App\SalesProductsDetail");
     }

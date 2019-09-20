@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class PaydeskEntry extends Model
 {   
     protected $fillable = [
-        'total',
-        'payment_id',
         'paydesk_id',
+        'payment_id',
+        'total',        
+        'enum_pay_with',
         'description'
     ];
     

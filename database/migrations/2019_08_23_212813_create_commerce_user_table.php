@@ -20,7 +20,7 @@ class CreateCommerceUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('commerce_id')->unsigned();
             $table->foreign('commerce_id')->references('id')->on('commerces');
-            $table->string('rol');
+            $table->enum('enum_rol',['ADMIN','EMPLOYEE','PROVIDER']);
             $table->string('enum_status');
             $table->timestamps();
         });

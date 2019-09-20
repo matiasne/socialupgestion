@@ -27,15 +27,18 @@ class Payment extends Model
         }
     }
 
-
-    public function paydeskEntries()
-    {
-        return $this->hasMany('App\PaydeskEntry');
+    public function paydesks(){
+        //Porque un pago se puede realizar en varias cajas
     }
 
     public function paydeskEgresses()
     {
         return $this->hasMany('App\PaydeskEgress');
+    }
+
+    public function paydeskEntries()
+    {
+        return $this->hasMany('App\PaydeskEntry');
     }
 
     public function commerces()

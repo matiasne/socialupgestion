@@ -25,7 +25,6 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('period');            
             $table->enum('enum_start_payment', ['ANTICIPADO','VENCIDO']);
             $table->enum('enum_status', ['ACTIVO','CANCELADO']);
-            $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH']);
             $table->integer('total_cost');
             
             $table->timestamps();

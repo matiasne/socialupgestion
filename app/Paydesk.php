@@ -17,11 +17,11 @@ class Paydesk extends Model
         return $this->belongsTo('App\Commerce');
     }
 
-    public function paydeskEgresses()
+    public function egresses()
     {
         return $this->hasMany('App\PaydeskEgress');
     }
-    public function paydeskEntries()
+    public function entries()
     {
         return $this->hasMany('App\PaydeskEntry');
     }

@@ -64,32 +64,16 @@ class SaleRepository{
         }
 
         //Si la venta está pagada entonces genera los pagos si no genera un pago pendiente
-        if($request->enum_status == "PAGADO"){
-
-            foreach ($request['payments'] as $payment){                
-
-                $this->rPagare->generatePayment(
-                    $sale->client_id,
-                    $commerce->id,
-                    "SALE",
-                    $sale->id,
-                    $payment,
-                    "PAGADO"
-                );
-            }
-        }
-        else{
-
-            $this->rPagare->generatePayment(
-                $sale->client_id,
-                $commerce->id,
-                "SALE",
-                $sale->id,
-                $payment,
-                "PENDIENTE"
-            );
-
-        }
+      
+        $this->rPagare->generatePayment(
+            $sale->client_id,
+            $commerce->id,
+            "SALE",
+            $sale->id,
+            $payment,
+            $request->enum_status
+        );           
+        
         
 
         $sale->save();
@@ -142,8 +126,8 @@ class SaleRepository{
             ]);            
         }
 
-        $sale->payments->paydeskEntries()->delete();
-        $sale->payments->paydeskEgresses()->delete();
+        $sale->payments()->paydeskEgresses()->delete();
+        $sale->payments()->paydeskEntries()->delete();
         $sale->payments()->delete();
 
         if($request->enum_status == "PAGADO"){
@@ -158,8 +142,6 @@ class SaleRepository{
                     $payment,
                     "PAGADO"
                 );
-
-               
             }
         }
         else{
