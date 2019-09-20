@@ -22,26 +22,26 @@ class PaymentRepository{
     }
 
     public function generatePayment(
-        $payment, 
-        $data, //sale
+        $client_id,
         $commerce_id,
         $enum_type,
+        $child_table_id,
+        $payment,        
         $status
     ){
         
         $payment = Payment::create([
-            "child_table_id" => $data->id,
+            "child_table_id" => $child_table_id,
             "enum_type" => $enum_type,
             "enum_status" => $status,
             "amount" => $payment->amount,
-            "client_id" => $data->client_id,
+            "client_id" => $client_id,
             "commerce_id" => $commerce_id,
         ]);
         
         
-        if($payment->enum_status == "PAGADO"){      
-
-
+        if($payment->enum_status == "PAGADO"){   
+            
             $this->rPaydesk->generatePaydeskEntry(
                 $payment->paydesk_id,
                 $payment->id,
@@ -49,30 +49,32 @@ class PaymentRepository{
                 $payment->enum_pay_with,
                 "Ingreso por pago"
             );                
-               
         }
         return $payment;
     }
 
 
 
-    public function updatePayment($data, Payment $payment, $newStatus){
+    public function updatePayments($data, Payment $payment){
 
     
         $return  = $payment;
 
-        if($payment->enum_status == "PENDIENTE" && $newStatus =="PAGADO" ){
+        if($payment->enum_status == "PENDIENTE" && $data->enum_status =="PAGADO" ){
 
             foreach ($data['payments'] as $payment){
             
                 $paymentObj = json_decode ($payment);    
 
+                
+
                 $this->generatePayment(
-                    $paymentObj,
-                    $data,
-                    $paymentObj->commerce_id,
+                    $data->client_id,
+                    $data->commerce_id,
                     $data->enum_type,
-                    $newStatus
+                    $data->id,
+                    $paymentObj,
+                    $data->enum_status
                 );  
             }
 
@@ -81,18 +83,19 @@ class PaymentRepository{
           
         }
 
-        if($payment->enum_status == "CANCELADO" &&  $newStatus == "PAGADO"){
+        if($payment->enum_status == "CANCELADO" &&  $data->enum_status == "PAGADO"){
 
             foreach ($data['payments'] as $payment){
             
                 $paymentObj = json_decode ($payment);    
 
                 $this->generatePayment(
-                    $paymentObj,
-                    $data,
-                    $paymentObj->commerce_id,
+                    $data->client_id,
+                    $data->commerce_id,
                     $data->enum_type,
-                    $newStatus
+                    $data->id,
+                    $paymentObj,
+                    $data->enum_status
                 );  
             }
 
@@ -100,7 +103,7 @@ class PaymentRepository{
 
         } 
 
-        if($payment->enum_status == "PAGADO" &&   $newStatus == "PENDIENTE" ){
+        if($payment->enum_status == "PAGADO" &&   $data->enum_status == "PENDIENTE" ){
 
             $this->rPaydesk->generatePaydeskEgress(
                 $payment->paydesk_id,
@@ -109,12 +112,10 @@ class PaymentRepository{
                 "Salida de PAGADO a PENDIENTE"
             );
             $payment->enum_status =  $status;
-            $payment->save();
-
-            
+            $payment->save();            
         }
 
-        if($payment->enum_status == "PAGADO" && $newStatus == "CANCELADO" ){
+        if($payment->enum_status == "PAGADO" && $data->enum_status == "CANCELADO" ){
             
             $this->rPaydesk->generatePaydeskEgress(
                 $payment->paydesk_id,

@@ -43,7 +43,7 @@ class PaymentController extends Controller
     public function update(Commerce $commerce, Payment $payment)
     {
         $data = $request->all();
-        $pay = $commerce->updatePayment($data,$payment,$request->enum_status)->get();
+        $pay = $commerce->updatePayments($data,$payment)->get();
 
         return $payment;
     }

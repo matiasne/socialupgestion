@@ -52,12 +52,14 @@ class SubscriptionRepository{
         if($request->enum_start_payment == "ANTICIPADO"){
             
             $this->rPagare->generatePayment(
-                $datarequest, 
-                $subs, 
+                $sale->client_id,
                 $commerce->id,
                 "SUBSCRIPTION",
+                $sale->id,
+                $payment,
                 "PAGADO"
             );
+
         }      
         
         return $subs;

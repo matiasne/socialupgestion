@@ -63,17 +63,17 @@ class SaleRepository{
             ]);           
         }
 
-       
         //Si la venta está pagada entonces genera los pagos si no genera un pago pendiente
         if($request->enum_status == "PAGADO"){
 
-            foreach ($request['payments'] as $payment){      
-           
+            foreach ($request['payments'] as $payment){                
+
                 $this->rPagare->generatePayment(
-                    $payment,
-                    $sale,
+                    $sale->client_id,
                     $commerce->id,
                     "SALE",
+                    $sale->id,
+                    $payment,
                     "PAGADO"
                 );
             }
@@ -81,12 +81,14 @@ class SaleRepository{
         else{
 
             $this->rPagare->generatePayment(
-                $payment,
-                $sale,
+                $sale->client_id,
                 $commerce->id,
                 "SALE",
+                $sale->id,
+                $payment,
                 "PENDIENTE"
             );
+
         }
         
 
@@ -129,6 +131,7 @@ class SaleRepository{
         }
 
         $sale->services()->detach();
+
         foreach ($request['services'] as $service){
             
             $serviceObj = json_decode ($service);
@@ -139,38 +142,39 @@ class SaleRepository{
             ]);            
         }
 
+        $sale->payments->paydeskEntries()->delete();
+        $sale->payments->paydeskEgresses()->delete();
         $sale->payments()->delete();
+
         if($request->enum_status == "PAGADO"){
 
             foreach ($request['payments'] as $payment){      
            
                 $this->rPagare->generatePayment(
-                    $payment,
-                    $sale,
+                    $sale->client_id,
                     $commerce->id,
                     "SALE",
+                    $sale->id,
+                    $payment,
                     "PAGADO"
                 );
+
+               
             }
         }
         else{
             
             $this->rPagare->generatePayment(
-                $payment,
-                $sale,
+                $sale->client_id,
                 $commerce->id,
                 "SALE",
+                $sale->id,
+                $payment,
                 "PENDIENTE"
             );
         }
 
-        $sale->save();
-
-        $data = $request->all();
-        
-        $this->rPagare->updatePayment($data,$sale->payments()->first(),$request->enum_status);
-
-
+        $sale->save();       
         return $sale;  
     }
 
