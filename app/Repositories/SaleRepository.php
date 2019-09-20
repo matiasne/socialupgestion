@@ -37,8 +37,7 @@ class SaleRepository{
             "creation_date" => $request->creation_date,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
-            "enum_status" => $request->enum_status, 
-            "enum_pay_with" =>$request->enum_pay_with           
+            "enum_status" => $request->enum_status,        
         ]);
 
         foreach ($request['products'] as $product){
@@ -61,23 +60,39 @@ class SaleRepository{
                 "service_id" => $serviceObj->id,
                 "service_amount" => $serviceObj->amount,
                 "service_price" => $serviceObj->price
-            ]);
-           
+            ]);           
         }
+
+       
+        //Si la venta está pagada entonces genera los pagos si no genera un pago pendiente
+        if($request->enum_status == "PAGADO"){
+
+            foreach ($request['payments'] as $payment){      
+           
+                $this->rPagare->generatePayment(
+                    $payment,
+                    $sale,
+                    $commerce->id,
+                    "SALE",
+                    "PAGADO"
+                );
+            }
+        }
+        else{
+
+            $this->rPagare->generatePayment(
+                $payment,
+                $sale,
+                $commerce->id,
+                "SALE",
+                "PENDIENTE"
+            );
+        }
+        
 
         $sale->save();
 
-        $dataRequest = $request->all();
-
-        $data = $sale;
-
-        $this->rPagare->generatePayment(
-            $dataRequest,
-            $data,
-            $commerce->id,
-            "SALE",
-            $request->enum_status
-        );
+        
        
 
         return $sale;
@@ -96,8 +111,7 @@ class SaleRepository{
             "employe_id" => $request->employe_id,
             "description" => $request->description,
             "total_cost" => $request->total_cost,
-            "enum_status" => $request->enum_status,
-            "enum_pay_with" =>$request->enum_pay_with 
+            "enum_status" => $request->enum_status
         ]);
         
         $sale->products()->detach();
@@ -114,16 +128,40 @@ class SaleRepository{
             
         }
 
+        $sale->services()->detach();
         foreach ($request['services'] as $service){
             
             $serviceObj = json_decode ($service);
-
             $sale->servicesDetails()->create([
                 "service_id" => $service->id,
                 "service_amount" => $service->amount,
                 "service_price" => $service->price
-            ]);
+            ]);            
+        }
+
+        $sale->payments()->delete();
+        if($request->enum_status == "PAGADO"){
+
+            foreach ($request['payments'] as $payment){      
+           
+                $this->rPagare->generatePayment(
+                    $payment,
+                    $sale,
+                    $commerce->id,
+                    "SALE",
+                    "PAGADO"
+                );
+            }
+        }
+        else{
             
+            $this->rPagare->generatePayment(
+                $payment,
+                $sale,
+                $commerce->id,
+                "SALE",
+                "PENDIENTE"
+            );
         }
 
         $sale->save();
@@ -142,16 +180,16 @@ class SaleRepository{
         
         foreach($payments as $payment){          
 
-            $entries = $payment->entries()->get();            
+            $paydeskEntries = $payment->paydeskEntries()->get();            
 
-            foreach($entries as $entry){
-                $entry->delete();
+            foreach($paydeskEntries as $paydeskEntry){
+                $paydeskEntry->delete();
             }
 
-            $egresses= $payment->egresses()->get();
+            $paydeskEgresses= $payment->paydeskEgresses()->get();
 
-            foreach($egresses as $egress){
-                $egress->delete();
+            foreach($paydeskEgresses as $paydeskEgress){
+                $paydeskEgress->delete();
             }
 
             $payment->delete();

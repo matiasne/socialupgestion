@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Egress;
+use App\PaydeskEntry;
 use Faker\Generator as Faker;
 
-$factory->define(Egress::class, function (Faker $faker) {
+$factory->define(PaydeskEntry::class, function (Faker $faker) {
     return [
         //
     ];

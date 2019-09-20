@@ -32,7 +32,12 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth:api'], function() {
         
-    Route::apiResource('users','UserController');    
+    //Route::apiResource('users','UserController');
+    
+    Route::post('users/search','UserController@search');
+
+    Route::apiResource('messages','MessageController');
+   
     Route::apiResource('commerces','Commerce\CommerceController');
 
     Route::group(['middleware' => 'belongs'], function() {
@@ -46,9 +51,9 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::apiResource('commerces.services','Commerce\ServiceController');
         Route::apiResource('commerces.categories','Commerce\CategoryController');    
         Route::apiResource('commerces.providers','Commerce\ProviderController'); 
-        Route::apiResource('commerces.employes','Commerce\EmployeController');       
+        //Route::apiResource('commerces.employes','Commerce\EmployeController');       
         Route::apiResource('commerces.payments','Commerce\PaymentController');
-        Route::apiResource('commerces.cajas','Commerce\CajaController');     
+        Route::apiResource('commerces.paydesks','Commerce\PaydeskController');    
 
         //Esto podria hacer el empleado
         
@@ -56,7 +61,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
     
     Route::group(['middleware' => 'idBelongs'], function() {
-        Route::get('commerces/{commerce_id}/cajas/{caja_id}/close','Commerce\CajaController@cerrar');
+        Route::get('commerces/{commerce_id}/paydesks/{paydesk_id}/close','Commerce\PaydeskController@cerrar');
+
+        Route::post('commerces/{commerce_id}/employees/{id}','UserController@setEmployeeRole');
     });
 });
 

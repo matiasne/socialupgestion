@@ -15,8 +15,7 @@ class Subscription extends Model
             'period',
             'enum_start_payment',
             'enum_status',
-            'total_cost',
-            'enum_pay_with'
+            'total_cost'
         ];
 
         public function commerce(){

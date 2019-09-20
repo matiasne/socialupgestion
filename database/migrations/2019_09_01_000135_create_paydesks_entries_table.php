@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntriesTable extends Migration
+class CreatePaydesksEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('paydesks_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('payment_id')->nullable();
             $table->foreign('payment_id')->references('id')->on('payments')->nullable();
-            $table->integer('caja_id');
-            $table->foreign('caja_id')->references('id')->on('cajas');
+            $table->integer('paydesk_id');
+            $table->foreign('paydesk_id')->references('id')->on('paydesks');
             $table->enum('enum_pay_with',['CREDIT','DEBIT','CASH']); 
             $table->string('description');
             $table->integer('total');
@@ -33,6 +33,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('paydesks_entries');
     }
 }

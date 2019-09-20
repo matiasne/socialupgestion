@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers\Commerce;
-use App\Http\Controllers\Controller;
 
-use App\Egress;
+namespace App\Http\Controllers;
+
+use App\CurrentAcount;
 use Illuminate\Http\Request;
 
-class EgressController extends Controller
+class CurrentAcountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class EgressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Egress  $egress
+     * @param  \App\CurrentAcount  $currentAcount
      * @return \Illuminate\Http\Response
      */
-    public function show(Egress $egress)
+    public function show(CurrentAcount $currentAcount)
     {
         //
     }
@@ -52,10 +52,10 @@ class EgressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Egress  $egress
+     * @param  \App\CurrentAcount  $currentAcount
      * @return \Illuminate\Http\Response
      */
-    public function edit(Egress $egress)
+    public function edit(CurrentAcount $currentAcount)
     {
         //
     }
@@ -64,10 +64,10 @@ class EgressController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Egress  $egress
+     * @param  \App\CurrentAcount  $currentAcount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Egress $egress)
+    public function update(Request $request, CurrentAcount $currentAcount)
     {
         //
     }
@@ -75,10 +75,10 @@ class EgressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Egress  $egress
+     * @param  \App\CurrentAcount  $currentAcount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Egress $egress)
+    public function destroy(CurrentAcount $currentAcount)
     {
         //
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClosingsTable extends Migration
+class CreateCurrentAcountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateClosingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('closings', function (Blueprint $table) {
+        Schema::create('current_acounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('paydesk_id');
-            $table->foreign('paydesk_id')->references('id')->on('paydesks');
-            $table->dateTime('date_closing');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('document_a')->nullable();
+            $table->string('document_b')->nullable();
+            $table->integer('balance');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateClosingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('closings');
+        Schema::dropIfExists('current_acounts');
     }
 }

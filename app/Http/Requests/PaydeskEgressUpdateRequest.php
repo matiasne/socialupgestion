@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EgressStoreRequest extends FormRequest
+class PaydeskEgressUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class EgressStoreRequest extends FormRequest
     {
         return [
             'total' => 'required|integer',
-            'payment_id' => 'required|integer'
- 
+            'payment_id' => 'required|integer',            
         ];
     }
 
@@ -38,4 +37,3 @@ class EgressStoreRequest extends FormRequest
         ];
     }
 }
-

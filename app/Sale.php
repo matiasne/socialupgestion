@@ -14,7 +14,6 @@ class Sale extends Model
         'description',
         'total_cost',
         'enum_status',
-        'enum_pay_with'
     ];
 
     protected $with = ['productsDetails'];

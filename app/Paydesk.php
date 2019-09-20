@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Caja extends Model
+class Paydesk extends Model
 {
     protected $fillable = [
         'name',        
@@ -17,13 +17,13 @@ class Caja extends Model
         return $this->belongsTo('App\Commerce');
     }
 
-    public function egresses()
+    public function paydeskEgresses()
     {
-        return $this->hasMany('App\Egress');
+        return $this->hasMany('App\PaydeskEgress');
     }
-    public function entries()
+    public function paydeskEntries()
     {
-        return $this->hasMany('App\Entry');
+        return $this->hasMany('App\PaydeskEntry');
     }
     public function closing()
     {

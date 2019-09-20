@@ -1,24 +1,24 @@
 <?php
 
 namespace App\Http\Controllers\Commerce;
-use App\Repositories\CajaRepository;
+use App\Repositories\PaydeskRepository;
 
 use App\Http\Controllers\Controller;
 
-use App\Caja;
+use App\Paydesk;
 use App\Commerce;
 
 
 use Illuminate\Http\Request;
 
-class CajaController extends Controller
+class PaydeskController extends Controller
 {
 
-    protected $rCaja;
+    protected $rPaydesk;
 
-    public function __construct(CajaRepository $rcaja)
+    public function __construct(PaydeskRepository $rPaydesk)
     {
-        $this->rCaja = $rcaja;
+        $this->rPaydesk = $rPaydesk;
 
         $this->middleware('isAdmin', ['only' => ['store','update','destroy','cerrar']]); 
     }
@@ -30,7 +30,7 @@ class CajaController extends Controller
      */
     public function index(Commerce $commerce)
     {
-        return $commerce->cajas()->get();
+        return $commerce->paydesks()->get();
     }
 
     /**
@@ -41,7 +41,7 @@ class CajaController extends Controller
      */
     public function store(Request $request, Commerce $commerce)
     {
-        $result = $this->rCaja->store($request->name,$request->total,$commerce->id);
+        $result = $this->rPaydesk->store($request->name,$request->total,$commerce->id);
 
         return ["code" => "200", "message" =>"success", "data" => $result];
     }
@@ -49,24 +49,24 @@ class CajaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Caja  $caja
+     * @param  \App\Paydesk  $Paydesk
      * @return \Illuminate\Http\Response
      */
-    public function show(Commerce $commerce,Caja $caja)
+    public function show(Commerce $commerce,Paydesk $paydesk)
     {
-        return $caja;
+        return $paydesk;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Caja  $caja
+     * @param  \App\Paydesk  $paydesk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Commerce $commerce,Caja $caja)
+    public function update(Request $request, Commerce $commerce,Paydesk $paydesk)
     {
-        $result = $this->rCaja->update($caja);
+        $result = $this->rPaydesk->update($paydesk);
 
         return ["code" => "200", "message" =>"success", "data" => $result];
     }
@@ -74,19 +74,19 @@ class CajaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Caja  $caja
+     * @param  \App\Paydesk  $paydesk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Commerce $commerce ,Caja $caja)
+    public function destroy(Commerce $commerce ,Paydesk $paydesk)
     {
-        $result = $this->rCaja->destroy($caja);
+        $result = $this->rPaydesk->destroy($paydesk);
 
         return ["code" => "200", "message" =>"success", "data" => $result];
     }
     
-    public function cerrar(Request $request,$commerce_id, $caja_id){
+    public function cerrar(Request $request,$commerce_id, $paydesk_id){
 
-        $result =  $this->rCaja->Closing($caja_id,$request->extracted);
+        $result =  $this->rPaydesk->Closing($paydesk_id,$request->extracted);
 
         return ["code" => "200", "message" =>"success", "data" => $result];
     }

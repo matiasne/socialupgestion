@@ -21,6 +21,7 @@ class CreateCommerceUserTable extends Migration
             $table->integer('commerce_id')->unsigned();
             $table->foreign('commerce_id')->references('id')->on('commerces');
             $table->string('rol');
+            $table->string('enum_status');
             $table->timestamps();
         });
     }

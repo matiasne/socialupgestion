@@ -38,8 +38,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function commerces()
-    {
+    public function commerces(){
         return $this->belongsToMany('App\Commerce')->withPivot('rol');
     }
+
+    public function currentAcount(){
+        return $this->belongsToMany('App\CurrentAcount');
+    }
+
+     // A user can send a message
+     public function sent()
+     {
+         return $this->hasMany(Message::class, 'sender_id');
+     }
+ 
+     // A user can also receive a message
+     public function received()
+     {
+         return $this->hasMany(Message::class, 'sent_to_id');
+     }
 }

@@ -22,7 +22,7 @@ class Commerce extends Model
     ];
 
 
-    protected $with = ['products','services','clients','employees','categories','providers','cajas'];
+    protected $with = ['products','services','clients','employees','categories','providers','paydesks'];
 
 
     public function products(){
@@ -68,8 +68,8 @@ class Commerce extends Model
         return $this->hasMany("App\Service");
     }
     
-    public function cajas(){
-        return $this->hasMany("App\Caja");
+    public function paydesks(){
+        return $this->hasMany("App\Paydesk");
     }
 
     public function payments(){

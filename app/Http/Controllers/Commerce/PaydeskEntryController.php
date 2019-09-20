@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
-use App\Repositories\CajaRepository;
+use App\Repositories\PaydeskRepository;
 
-use App\Entry;
+use App\PaydeskEntry;
 use App\Commerce;
 
 use Illuminate\Http\Request;
 
-class EntryController extends Controller
+class PaydeskEntryController extends Controller
 {   
     
 
@@ -42,10 +42,10 @@ class EntryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entry  $entry
+     * @param  \App\PaydeskEntry  $Paydeskentry
      * @return \Illuminate\Http\Response
      */
-    public function show(Entry $entry)
+    public function show(PaydeskEntry $paydeskEntry)
     {
         //
     }
@@ -55,10 +55,10 @@ class EntryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entry  $entry
+     * @param  \App\PaydeskEntry  $paydeskEntry
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entry $entry)
+    public function update(Request $request, PaydeskEntry $paydeskEntry)
     {
         //
     }
@@ -66,10 +66,10 @@ class EntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entry  $entry
+     * @param  \App\PaydeskEntry  $paydeskEntry
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entry $entry)
+    public function destroy(PaydeskEntry $paydeskEntry)
     {
         //
     }

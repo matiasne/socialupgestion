@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Caja;
+use App\Paydesk;
 use Faker\Generator as Faker;
 
-$factory->define(Caja::class, function (Faker $faker) {
+$factory->define(Paydesk::class, function (Faker $faker) {
     return [
         //
     ];

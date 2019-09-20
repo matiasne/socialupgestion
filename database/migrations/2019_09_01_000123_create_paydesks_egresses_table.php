@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEgressesTable extends Migration
+class CreatePaydesksEgressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateEgressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('egresses', function (Blueprint $table) {
+        Schema::create('paydesks_egresses', function (Blueprint $table) {
             $table->bigIncrements('id'); 
             $table->integer('payment_id')->nullable();
             $table->foreign('payment_id')->references('id')->on('payments')->nullable();          
-            $table->integer('caja_id');
-            $table->foreign('caja_id')->references('id')->on('cajas');
+            $table->integer('paydesk_id');
+            $table->foreign('paydesk_id')->references('id')->on('paydesks');
             $table->string('description');
             $table->integer('total');
             $table->timestamps();
@@ -32,6 +32,6 @@ class CreateEgressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('egresses');
+        Schema::dropIfExists('paydesks_egresses');
     }
 }

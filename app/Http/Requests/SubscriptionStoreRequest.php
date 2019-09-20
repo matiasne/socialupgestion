@@ -31,7 +31,6 @@ class SubscriptionStoreRequest extends FormRequest
             'enum_start_payment' => 'required|string',
             'enum_status' => 'required|string',
             'total_cost' => 'required|integer',
-            'enum_pay_with' => 'required|string',
         ];
     }
 
@@ -45,7 +44,6 @@ class SubscriptionStoreRequest extends FormRequest
             'enum_start_payment.required' => 'enum_start_payment is required!',
             'enum_status.required' => 'enum_status is required!',
             'total_cost.required' => 'total_cost is required!',
-            'enum_pay_with' => 'enum_pay_with is required!'
         ];
     }
 

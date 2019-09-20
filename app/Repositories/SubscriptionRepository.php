@@ -38,9 +38,7 @@ class SubscriptionRepository{
             "total_cost" => $request->total_cost,
             "period" => $request->period,
             "start_date" => $request->start_date,
-            "enum_status" => $request->enum_status,
-            "enum_pay_with" =>$request->enum_pay_with 
-
+            "enum_status" => "$request->enum_status"
         ]); 
         
         foreach ($request['services_ids'] as $service_id){
@@ -77,8 +75,7 @@ class SubscriptionRepository{
             "description" => $request->description,
             "total_cost" => $request->total_cost,
             "period" => $request->period,
-            "enum_status" => $request->enum_status,
-            "enum_pay_with" =>$request->enum_pay_with 
+            "enum_status" => $request->enum_status
         ]);
 
         $subscription->services()->detach();
@@ -97,16 +94,16 @@ class SubscriptionRepository{
         
         foreach($payments as $payment){          
 
-            $entries = $payment->entries()->get();           
+            $paydeskEntries = $payment->paydeskEntries()->get();           
 
-            foreach($entries as $entry){
-                $entry->delete();
+            foreach($paydeskEntries as $paydeskEntry){
+                $paydeskEntry->delete();
             }
 
-            $egresses= $payment->egresses()->get();
+            $paydeskEgresses= $payment->paydeskEgresses()->get();
 
-            foreach($egresses as $egress){
-                $egress->delete();
+            foreach($paydeskEgresses as $paydeskEgress){
+                $paydeskEgress->delete();
             }
 
             $payment->delete();

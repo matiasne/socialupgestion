@@ -14,7 +14,7 @@ class Payment extends Model
         'child_table_id', 
         'enum_type',
         'enum_status',
-        'total_cost',
+        'amount',
     ];
 
     public function conceptoReferido(){
@@ -28,14 +28,14 @@ class Payment extends Model
     }
 
 
-    public function entries()
+    public function paydeskEntries()
     {
-        return $this->hasMany('App\Entry');
+        return $this->hasMany('App\PaydeskEntry');
     }
 
-    public function egresses()
+    public function paydeskEgresses()
     {
-        return $this->hasMany('App\Egress');
+        return $this->hasMany('App\PaydeskEgress');
     }
 
     public function commerces()

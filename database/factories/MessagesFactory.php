@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Entry;
+use App\Messages;
 use Faker\Generator as Faker;
 
-$factory->define(Entry::class, function (Faker $faker) {
+$factory->define(Messages::class, function (Faker $faker) {
     return [
         //
     ];

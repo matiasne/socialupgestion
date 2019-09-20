@@ -34,7 +34,7 @@ class CommerceController extends Controller
             ->without('employees')
             ->without('categories')
             ->without('providers')
-            ->without('cajas')
+            ->without('paydesks')
             ->get();
         return $commerces;
     }
@@ -130,7 +130,7 @@ class CommerceController extends Controller
         $commerce->sales()->delete();
         $commerce->subscription()->delete();
         $commerce->services()->delete();
-        $commerce->cajas()->delete();
+        $commerce->paydesks()->delete();
         $commerce->payments()->delete();
 
         $commerce->delete();

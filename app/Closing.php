@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Closing extends Model
 {
     protected $fillable = [
-        'caja_id',
+        'paydesk_id',
         'date_closing'
     ];
 
-    public function cajas()
+    public function paydesks()
     {
-        return $this->belongsTo('App\Caja');
+        return $this->belongsTo('App\Paydesk');
     }
 
 }

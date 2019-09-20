@@ -4,20 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Egress extends Model
+class PaydeskEntry extends Model
 {   
     protected $fillable = [
-        'caja_id',
-        'payment_id',
         'total',
+        'payment_id',
+        'paydesk_id',
         'description'
     ];
-
-    public function cajas()
-    {
-        return $this->belongsTo('App\Caja');
-    }
     
+    public function paydesks()
+    {
+        return $this->belongsTo('App\Paydesk');
+    }
+
     public function payments(){
         return $this->belongsTo('App\Payment');
     }
