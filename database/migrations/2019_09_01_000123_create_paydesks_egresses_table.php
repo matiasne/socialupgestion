@@ -20,7 +20,7 @@ class CreatePaydesksEgressesTable extends Migration
             $table->integer('paydesk_id');
             $table->foreign('paydesk_id')->references('id')->on('paydesks');
             $table->string('description');
-            $table->integer('total');
+            $table->integer('amount');
             $table->timestamps();
         });
     }

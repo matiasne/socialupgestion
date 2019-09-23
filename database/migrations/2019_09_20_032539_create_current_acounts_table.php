@@ -15,8 +15,8 @@ class CreateCurrentAcountsTable extends Migration
     {
         Schema::create('current_acounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->string('document_a')->nullable();
             $table->string('document_b')->nullable();
             $table->integer('balance');

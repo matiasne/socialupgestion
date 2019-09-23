@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Payment;
 use App\Commerce;
 use App\Sale;
+use App\Client;
 
 use App\Http\Requests\SaleStoreRequest;
 use App\Repositories\PaydeskRepository;
@@ -26,49 +27,45 @@ class PaymentRepository{
         $commerce_id,
         $enum_type,
         $child_table_id,
-        $payment,        
+        $_payment,        
         $status
     ){
         
-        $payment = Payment::create([
-            "child_table_id" => $child_table_id,
-            "enum_type" => $enum_type,
-            "enum_status" => $status,
-            "amount" => $payment->amount,
-            "client_id" => $client_id,
-            "commerce_id" => $commerce_id,
-        ]);
+        $payment = new Payment;
+
+        $payment->child_table_id = $child_table_id;
+        $payment->enum_type = $enum_type;
+        $payment->enum_status = $status;
+        $payment->client_id = $client_id;
+        $payment->commerce_id = $commerce_id;
+        $payment->save();
         
-        
-        if($payment->enum_status == "PAGADO"){  
+        if($_payment->enum_status == "PAGADO"){                     
             
-                    
-            
-            foreach ($payment['entries'] as $entrie){                
+            foreach ($_payment['entries'] as $entrie){                
 
                 $entrieObj = json_decode ($entrie);
 
                 if($entrieObj->enum_pay_with == "CTACORRIENTE"){
-
-                    //Acá genera un agreso de la cuenta corriente del cliente
-        
-                  
+                    $client = Client::findOrFail($client_id);
+                    $client->currentAcount()->egresses()->create([
+                        'amount' =>  $entrie->amount,       
+                        'description' => ""
+                    ]);                  
                 }   
 
+                //!!!!!!! que hacer con los descuentos?? que son regalos!
+                $payment->paydeskEntries()->create([
+                    "paydesk_id" => $entrieObj->paydesk_id,
+                    "amount" => $entrieObj->amount,
+                    "enum_pay_with" => $entrieObj->enum_pay_with,
+                    "description" => "Ingreso por pago"
+                ]); 
 
-                if($entrieObj->enum_pay_with != "DISCOUNT"){
-
-                   //Si es con descuento entonces no genera ingreso de caja
-                    $this->rPaydesk->generatePaydeskEntry(
-                        $entrieObj->paydesk_id,
-                        $entrieObj->id,
-                        $entrieObj->amount,
-                        $entrieObj->enum_pay_with,
-                        "Ingreso por pago"
-                    ); 
-                }   
+                
             }                        
         }
+        
         return $payment;
     }
 
@@ -84,13 +81,14 @@ class PaymentRepository{
                 
                 $entrieObj = json_decode ($entrie); 
 
-                $this->rPaydesk->generatePaydeskEntry(
-                    $entrieObj->paydesk_id,
-                    $entrieObj->id,
-                    $entrieObj->amount,
-                    $entrieObj->enum_pay_with,
-                    "Ingreso por pago"
-                );    
+                $payment->paydeskEntries()->create([
+                    "paydesk_id" => $entrieObj->paydesk_id,
+                    "amount" => $entrieObj->amount,
+                    "enum_pay_with" => $entrieObj->enum_pay_with,
+                    "description" => "Ingreso por pago"
+                ]);
+
+              
             }           
           
         }
@@ -101,13 +99,13 @@ class PaymentRepository{
                 
                 $entrieObj = json_decode ($entrie); 
 
-                $this->rPaydesk->generatePaydeskEntry(
-                    $entrieObj->paydesk_id,
-                    $entrieObj->id,
-                    $entrieObj->amount,
-                    $entrieObj->enum_pay_with,
-                    "Ingreso por pago"
-                );    
+                $payment->paydeskEntries()->create([
+                    "paydesk_id" => $entrieObj->paydesk_id,
+                    "amount" => $entrieObj->amount,
+                    "enum_pay_with" => $entrieObj->enum_pay_with,
+                    "description" => "Ingreso por pago"
+                ]);
+                
             }           
 
         } 

@@ -50,19 +50,24 @@ class CommerceController extends Controller
     {
         $data = $request->validated();
 
-        $commerce = Commerce::create([
-            "name" => $request->name,
-            "address" => $request->address,
-            "phone_number" => $request->phone_number,
-            "img"  => $this->rimg->imgCommerce($request),
-            "latitud" => $request->latitud,
-            "longitud" => $request->longitud,
-            "description" => $request->description,
-            "email" => $request->email,
-            
+        $commerce = new Commerce;
+        
+        $commerce->name = $request->name;
+        $commerce->address = $request->address;
+        $commerce->phone_number = $request->phone_number;
+        $commerce->img = $request->img;
+        $commerce->latitud = $request->latitud;
+        $commerce->longitud = $request->longitud;
+        $commerce->description = $request->description;
+        $commerce->email = $request->email;             
+       
+
+        $request->user('api')->commerces()->attach($commerce->id, [
+            'enum_rol' => "ADMIN",
+            'enum_status' => "DESCONECTADO"
         ]);
 
-        $request->user('api')->commerces()->attach($commerce->id, ['rol' => "ADMIN"]);
+        $commerce->save();
 
         return ["code" => "200", "message" =>"success", "data" => $commerce];
     }

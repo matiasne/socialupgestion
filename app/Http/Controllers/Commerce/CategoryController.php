@@ -39,10 +39,10 @@ class CategoryController extends Controller
      */
     public function store(CategoryStoreRequest $request, Commerce $commerce)
     {
-        $category = Category::create([
-            "name" => $request->name,
-            "commerce_id" =>  $commerce->id,  
-        ]);     
+        $category = new Category;
+        $category->name = $request->name;
+        $category->commerce_id =  $commerce->id;
+        
 
         return ["code" => "200", "message" =>"success", "data" => $category];
     }

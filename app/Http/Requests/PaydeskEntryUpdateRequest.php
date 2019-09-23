@@ -24,7 +24,7 @@ class PaydeskEntryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'total' => 'required|integer',
+            'amount' => 'required|integer',
             'payment_id' => 'required|integer'
         ];
     }
@@ -32,7 +32,7 @@ class PaydeskEntryUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'total.required' => 'total is required!',
+            'amount.required' => 'amount is required!',
             'payment_id.required' => 'payment_id is required for update!'
         ];
     }

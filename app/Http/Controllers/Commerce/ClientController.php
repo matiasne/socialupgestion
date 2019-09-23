@@ -30,14 +30,15 @@ class ClientController extends Controller
      */
     public function store(Request $request,  Commerce $commerce)
     {
-        $client = Client::create([
-            "name" => $request->name,
-            "address" => $request->address,
-            "phone_number" => $request->phone_number,
-            "email" => $request->email,
-            'positive_credit'=>$request->positive_credit,
-            "commerce_id" => $commerce->id
-        ]);     
+        $client = new Client;
+        $client->name = $request->name;
+        $client->address = $request->address;
+        $client->phone_number = $request->phone_number;
+        $client->email = $request->email;
+        $client->positive_credit = $request->positive_credit;
+        $client->commerce_id = $commerce->id;
+             
+        $client->save();
 
         return ["code" => "200", "message" =>"success", "data" => $client];
     }
@@ -65,13 +66,12 @@ class ClientController extends Controller
 
         $client = Client::findOrFail($client_id);
 
-        $client->update([
-            "name" => $request->name,
-            "address" => $request->address,
-            "phone_number" => $request->phone_number,
-            'positive_credit'=>$request->positive_credit,
-            "email" => $request->email
-        ]);
+        
+        $client->name = $request->name;
+        $client->address = $request->address;
+        $client->phone_number = $request->phone_number;
+        $client->positive_credit = $request->positive_credit;
+        $client->email = $request->email;
         
         $client->save();
 

@@ -41,7 +41,7 @@ class PaydeskController extends Controller
      */
     public function store(Request $request, Commerce $commerce)
     {
-        $result = $this->rPaydesk->store($request->name,$request->total,$commerce->id);
+        $result = $this->rPaydesk->store($request->name,$request->amount,$commerce->id);
 
         return ["code" => "200", "message" =>"success", "data" => $result];
     }

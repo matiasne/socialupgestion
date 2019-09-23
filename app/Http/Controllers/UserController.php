@@ -42,7 +42,10 @@ class UserController extends Controller
     public function setEmployeeRole($commerce_id,$id)
     {
         $commerce = Commerce::findOrFail($commerce_id);
-        $commerce->users()->attach($id, ['rol' => "EMPLOYEE"] );
+        $commerce->users()->attach($id, [
+            'enum_rol' => "EMPLOYEE",
+            'enum_status' => "DESCONECTADO"
+        ] );
 
         return ["code" => "200", "message" =>"success", "data" => "OK"];
         

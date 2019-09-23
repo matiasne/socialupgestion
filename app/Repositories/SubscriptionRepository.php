@@ -28,24 +28,22 @@ class SubscriptionRepository{
 
     public function storeSubscription(SubscriptionStoreRequest $request , Commerce $commerce){
        
-        $subs = Subscription::create([
-            
-            "commerce_id" =>  $commerce->id,  
-            "client_id" => $request->client_id,
-            "employe_id" => $request->employe_id,
-            "enum_start_payment" => $request->enum_start_payment,
-            "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "period" => $request->period,
-            "start_date" => $request->start_date,
-            "enum_status" => "$request->enum_status"
-        ]); 
+        $subs = new Subscription;
+        
+        $subs->commerce_id =  $commerce->id;  
+        $subs->client_id = $request->client_id;
+        $subs->employe_id = $request->employe_id;
+        $subs->enum_start_payment = $request->enum_start_payment;
+        $subs->description = $request->description;
+        $subs->total_cost = $request->total_cost;
+        $subs->period = $request->period;
+        $subs->start_date = $request->start_date;
+        $subs->enum_status = $request->enum_status; 
         
         foreach ($request['services_ids'] as $service_id){
             $subs->services()->attach($service_id);
-        }
+        }        
         
-        $subs->save();
 
         $datarequest= $request->all();
 
@@ -62,6 +60,7 @@ class SubscriptionRepository{
 
         }      
         
+        $subs->save();
         return $subs;
 
     }

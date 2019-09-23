@@ -43,18 +43,19 @@ class ProductController extends Controller
     {       
         $data = $request->validated();
 
-        $prod = Product::create([
-            "name" => $request->name,
-            "description" => $request->description,
-            "stock" => $request->stock,
-            "price" => $request->price,
-            "code"=>$request->code,
-            "commerce_id" =>  $commerce->id,  
-            "provider_id" => $request->provider_id,
-            "category_id" => $request->category_id,
-            "imgproduct" => $this->img->imgProduct($request),
-        ]);     
-            
+        $prod = new Product;
+        $prod->name = $request->name;
+        $prod->description = $request->description;
+        $prod->stock = $request->stock;
+        $prod->price = $request->price;
+        $prod->code = $request->code;
+        $prod->commerce_id =  $commerce->id;  
+        $prod->provider_id = $request->provider_id;
+        $prod->category_id = $request->category_id;
+        $prod->imgproduct = $this->img->imgProduct($request);
+    
+        $prod->save();
+
         return ["code" => "200", "message" =>"success", "data" => $prod];
     }
 

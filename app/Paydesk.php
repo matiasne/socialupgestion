@@ -8,8 +8,7 @@ class Paydesk extends Model
 {
     protected $fillable = [
         'name',        
-        'commerce_id', 
-        'total'
+        'commerce_id'
     ];
 
     public function commerce()

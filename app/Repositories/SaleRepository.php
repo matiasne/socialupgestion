@@ -30,15 +30,20 @@ class SaleRepository{
 
     public function storeSale(SaleStoreRequest $request , Commerce $commerce){
         
-        $sale = Sale::create([
-            "client_id" => $request->client_id,
-            "commerce_id" =>$commerce->id,
-            "employe_id" => $request->employe_id,
-            "creation_date" => $request->creation_date,
-            "description" => $request->description,
-            "total_cost" => $request->total_cost,
-            "enum_status" => $request->enum_status,        
-        ]);
+        $sale = new Sale;    
+        
+        echo $request->$client_id;
+        exit();
+        
+        $sale->client_id = $request->client_id;
+        $sale->commerce_id =$commerce->id;
+        $sale->employe_id = $request->employe_id;
+        $sale->creation_date = $request->creation_date;
+        $sale->description = $request->description;
+        $sale->total_cost = $request->total_cost;
+        $sale->enum_status = $request->enum_status;        
+        
+        $sale->save();
 
         foreach ($request['products'] as $product){
 
@@ -70,7 +75,7 @@ class SaleRepository{
             $commerce->id,
             "SALE",
             $sale->id,
-            $payment,
+            $request->$payment,
             $request->enum_status
         );        
         

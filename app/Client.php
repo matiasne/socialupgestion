@@ -14,4 +14,10 @@ class Client extends Model
         'positive_credit',
         'email',
     ];
+
+    public function currentAccount()
+    {
+        return $this->belongsTo('App\CurrentAcount');
+    }
+
 }

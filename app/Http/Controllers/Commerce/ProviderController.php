@@ -43,10 +43,12 @@ class ProviderController extends Controller
      */
     public function store(ProviderStoreRequest $request, Commerce $commerce)
     {
-        $provider = Provider::create([
-            "name" => $request->name,
-            "commerce_id" =>  $commerce->id,  
-        ]);     
+        $provider = new Provider;
+
+        $provider->name = $request->name;
+        $provider->commerce_id =  $commerce->id;  
+        
+        $provider->save();
 
         return ["code" => "200", "message" =>"success", "data" => $provider];
     }

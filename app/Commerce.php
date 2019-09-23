@@ -32,15 +32,15 @@ class Commerce extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')->withPivot('rol');
+        return $this->belongsToMany('App\User')->withPivot('enum_rol','enum_status');
     }
 
     public function employees() {
-        return $this->users()->wherePivot('rol', 'EMPLOYEE');
+        return $this->users()->wherePivot('enum_rol', 'EMPLOYEE');
     }
 
     public function admins() {
-        return $this->users()->wherePivot('rol', 'ADMIN');
+        return $this->users()->wherePivot('enum_rol', 'ADMIN');
     }
 
 

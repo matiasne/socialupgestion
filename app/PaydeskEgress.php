@@ -9,7 +9,7 @@ class PaydeskEgress extends Model
     protected $fillable = [
         'paydesk_id',
         'payment_id',
-        'total',
+        'amount',
         'description'
     ];
 

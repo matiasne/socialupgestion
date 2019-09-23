@@ -9,49 +9,14 @@ use App\Closing;
 
 class PaydeskRepository{    
 
-    public function generatePaydeskEntry(
-        $paydesk_id,        
-        $payment_id,
-        $total,
-        $enum_pay_with,
-        $description
-    ){
-
-        $paydeskEntry = PaydeskEntry::create([
-            "paydesk_id" => $paydesk_id,
-            "total" => $total,
-            "payment_id" =>$payment_id,
-            "enum_pay_with" => $enum_pay_with,
-            "description" => $description 
-        ]); 
-        
-        return $paydeskEntry;
-    }
-
-    public function generatePaydeskEgress(
-        $paydesk_id,
-        $payment_id,
-        $total,        
-        $description
-    ){
-        
-        $paydeskEgress = PaydeskEgress::create([
-            "paydesk_id" => $paydesk_id,
-            "payment_id" => $payment_id,
-            "total" => $total,
-            "description" => $description
-        ]);
-
-        return $paydeskEgress;
-    }
+    
 
     public function store($name,$total,$commerce){
 
-        $paydesk = Paydesk::create([
-            "name" => $name,
-            "total" => $total,
-            "commerce_id" => $commerce,
-        ]);
+        $paydesk = new Paydesk;
+        $paydesk->name = $name;
+        $paydesk->total = $total;
+        $paydesk->commerce_id = $commerce;
 
         $paydesk->save();
 
@@ -138,10 +103,11 @@ class PaydeskRepository{
     
             $date = Carbon::now();
     
-            $close = Closing::create([
-                "paydesk_id" =>  $paydesk->id,
-                "date_closing" => $date->format('Y-m-d H:m:s')
-            ]);
+            $close =  new Closing;
+            
+            $close->paydesk_id = $paydesk->id;
+            $close->date_closing =$date->format('Y-m-d H:m:s');
+            $close->save();
     
             return $close;
 

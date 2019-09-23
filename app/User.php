@@ -39,7 +39,7 @@ class User extends Authenticatable
     ];
 
     public function commerces(){
-        return $this->belongsToMany('App\Commerce')->withPivot('rol');
+        return $this->belongsToMany('App\Commerce')->withPivot('enum_rol');
     }
 
     public function currentAcount(){

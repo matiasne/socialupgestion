@@ -9,7 +9,7 @@ class PaydeskEntry extends Model
     protected $fillable = [
         'paydesk_id',
         'payment_id',
-        'total',        
+        'amount',        
         'enum_pay_with',
         'description'
     ];

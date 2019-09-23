@@ -40,13 +40,15 @@ class ServiceController extends Controller
         
         $data = $request->validated();
 
-        $serv = Service::create([
-            "name" => $request->name,
-            "description" => $request->description,
-            "price" => $request->price,
-            "commerce_id" =>  $commerce->id,  
-            "category_id" => $request->category_id
-        ]);     
+        $serv = new Service;
+
+        $serv->name = $request->name;
+        $serv->description = $request->description;
+        $serv->price = $request->price;
+        $serv->commerce_id =  $commerce->id;  
+        $serv->category_id = $request->category_id;
+
+        $serv->save();
 
         return ["code" => "200", "message" =>"success", "data" => $serv];
     }
@@ -59,7 +61,6 @@ class ServiceController extends Controller
      */
     public function show(Commerce $commerce, Service $service)
     {
-        //
         return $service;
     }
 
